@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDISIGN — 간호대학 의료 접근성 봉사 동아리</title>
+<meta name="description" content="메디사인(MEDISIGN)은 의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는 간호대학생 봉사 동아리입니다. 2026년 첫 프로젝트는 청각장애인의 의료 접근성입니다.">
+<meta property="og:title" content="MEDISIGN — 말이 닿지 않는 곳에서, 신호를 읽습니다">
+<meta property="og:description" content="의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는 간호대학생 봉사 동아리">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F2F1EB">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231D39F5'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%23F6F6F4' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* ============ 디자인 토큰 ============ */
+:root{
+  --paper:#F2F1EB;      /* 배경(종이) */
+  --surface:#F6F6F4;    /* 카드 표면 */
+  --ink:#121210;        /* 본문(잉크) */
+  --ink-soft:#3A3A36;
+  --muted:#706E63;
+  --line:rgba(18,18,16,.14);
+  --accent:#1D39F5;     /* 포인트 블루 */
+  --peach:#FFD0C2;
+  --on-dark:#F6F6F4;
+  --on-dark-soft:rgba(246,246,244,.78);
+  --on-dark-muted:rgba(246,246,244,.55);
+  --line-dark:rgba(246,246,244,.18);
+  --font:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --fs-display:clamp(2.35rem,7vw,5.4rem);
+  --fs-mid:clamp(1.6rem,3.4vw,2.6rem);
+  --pad-sec:clamp(5.5rem,11vw,9.5rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-padding-top:5.5rem}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--font);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.lock{overflow:hidden}
+::selection{background:var(--accent);color:var(--on-dark)}
+a{color:inherit}
+ul{list-style:none}
+h1,h2,h3{line-height:1.05;letter-spacing:-.03em;font-weight:700}
+em{font-style:normal;color:var(--accent)}
+
+/* 접근성: 스킵 링크 + 포커스 표시 */
+.skip{position:fixed;left:1rem;top:-4rem;z-index:200;background:var(--ink);color:var(--on-dark);
+  padding:.7rem 1.2rem;font-weight:700;text-decoration:none;transition:top .2s}
+.skip:focus{top:1rem}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.dark :focus-visible,#menu :focus-visible{outline-color:var(--peach)}
+
+.container{width:min(1180px,92vw);margin-inline:auto}
+.micro{font-size:.72rem;font-weight:650;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.dark .micro{color:var(--on-dark-muted)}
+
+/* ============ 헤더 (difference 블렌드로 다크 섹션 위에서 자동 반전) ============ */
+header{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  mix-blend-mode:difference;color:#fff;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 4vw;
+}
+.wordmark{font-weight:800;letter-spacing:-.02em;font-size:1.05rem;text-decoration:none}
+.wordmark i{font-style:normal;color:#E2C60A}/* difference 위에서 파랑으로 보임 */
+.head-right{display:flex;align-items:center;gap:1.6rem}
+.head-clock{font-size:.72rem;font-weight:650;letter-spacing:.16em}
+#menuBtn{
+  background:none;border:0;cursor:pointer;color:inherit;font-family:inherit;
+  font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:.4rem .2rem;
+}
+#menuBtn .br{color:#E2C60A;font-weight:800}
+
+/* ============ 메뉴 오버레이 ============ */
+#menu{
+  position:fixed;inset:0;z-index:90;background:var(--ink);color:var(--on-dark);
+  display:flex;flex-direction:column;justify-content:center;
+  visibility:hidden;opacity:0;transform:translateY(-1.5%);
+  transition:opacity .45s ease,transform .45s ease,visibility 0s .45s;
+}
+#menu.open{visibility:visible;opacity:1;transform:none;transition:opacity .45s ease,transform .45s ease}
+#menu nav ul{display:flex;flex-direction:column;gap:.2rem}
+#menu nav a{
+  display:flex;align-items:baseline;gap:1.4rem;text-decoration:none;
+  font-size:clamp(1.7rem,4.6vw,3.3rem);font-weight:700;letter-spacing:-.02em;
+  padding:.45rem 0;border-bottom:1px solid var(--line-dark);
+  opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,color .2s;
+  transition-delay:var(--d,0s);
+}
+#menu.open nav a{opacity:1;transform:none}
+#menu nav a:hover{color:var(--peach)}
+#menu nav a .n{font-size:.72rem;font-weight:650;letter-spacing:.16em;color:var(--on-dark-muted);min-width:3.2rem}
+#menu .menu-meta{
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  margin-top:3rem;color:var(--on-dark-muted);
+}
+
+/* ============ 섹션 공통 ============ */
+section{padding-block:var(--pad-sec)}
+.sec-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  border-top:1px solid var(--line);padding-top:1.1rem;
+  margin-bottom:clamp(2.6rem,6vw,4.6rem);
+}
+.dark .sec-head{border-color:var(--line-dark)}
+.display{font-size:var(--fs-display);letter-spacing:-.035em;line-height:1.04;text-wrap:balance}
+.lead{
+  font-size:clamp(1.02rem,1.5vw,1.22rem);line-height:1.85;color:var(--ink-soft);
+  max-width:46ch;margin-top:clamp(1.6rem,3vw,2.4rem);
+}
+.dark{background:var(--ink);color:var(--on-dark)}
+.dark .lead{color:var(--on-dark-soft)}
+
+/* 등장 애니메이션 (JS 있을 때만 숨김 → 무동작 환경에서도 항상 보임) */
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ============ 01 히어로 ============ */
+#hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(3rem,6vw,5rem);padding-top:7rem}
+#hero .sec-head{margin-bottom:auto;border-top:0;padding-top:0}
+#hero h1{font-size:clamp(2.7rem,9vw,7rem);letter-spacing:-.04em;line-height:1.0;margin-top:3rem}
+#hero .hero-meta{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;
+  margin-top:clamp(2.5rem,5vw,4rem);
+}
+.cta-row{display:flex;gap:1.6rem;flex-wrap:wrap;margin-top:2.6rem}
+.cta{
+  text-decoration:none;font-weight:700;font-size:1rem;letter-spacing:.01em;
+  display:inline-flex;gap:.55em;align-items:baseline;
+}
+.cta .br{color:var(--accent);font-weight:800;transition:letter-spacing .25s,transform .25s;display:inline-block}
+.cta:hover .br:first-child{transform:translateX(-4px)}
+.cta:hover .br:last-child{transform:translateX(4px)}
+.cta.ghost{color:var(--muted)}
+.dark .cta .br{color:var(--peach)}
+
+/* ============ 02 문제 ============ */
+.quoteline{color:var(--on-dark-muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;margin-top:clamp(3rem,6vw,4.5rem)}
+.stat{border-top:1px solid var(--line-dark);padding-top:1.4rem}
+.stat-num{font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:750;letter-spacing:-.03em;line-height:1.1}
+.stat-num .unit{font-size:.45em;font-weight:650;margin-left:.15em;color:var(--on-dark-soft)}
+.stat-cap{margin-top:.9rem;font-size:.92rem;line-height:1.65;color:var(--on-dark-soft);max-width:30ch}
+.stat-cap strong{color:var(--on-dark);font-weight:700}
+.src{margin-top:3.2rem;font-size:.75rem;line-height:1.8;color:var(--on-dark-muted)}
+
+/* ============ 03 하는 일 ============ */
+.work-list{border-bottom:1px solid var(--line)}
+.work-row{
+  position:relative;display:grid;grid-template-columns:4.5rem 1fr auto;gap:1.5rem;align-items:baseline;
+  padding:clamp(1.6rem,3vw,2.3rem) clamp(.4rem,1vw,1rem);border-top:1px solid var(--line);cursor:default;
+}
+.work-row::before{
+  content:"";position:absolute;inset:0;background:var(--accent);
+  transform:scaleY(0);transform-origin:bottom;transition:transform .35s cubic-bezier(.7,0,.2,1);
+}
+.work-row>*{position:relative;z-index:1;transition:color .25s}
+.work-row:hover::before{transform:scaleY(1)}
+.work-row:hover h3,.work-row:hover .w-num{color:var(--on-dark)}
+.work-row:hover p{color:rgba(246,246,244,.85)}
+.work-row:hover .w-tag{color:var(--peach)}
+.w-num{font-size:.78rem;font-weight:650;letter-spacing:.14em;color:var(--muted)}
+.work-row h3{font-size:clamp(1.25rem,2.4vw,1.8rem);letter-spacing:-.02em}
+.work-row p{margin-top:.5rem;color:var(--muted);font-size:.95rem;line-height:1.7;max-width:52ch}
+.w-tag{font-size:.7rem;font-weight:650;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+
+/* ============ 04 이름의 의미 ============ */
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1rem}
+.twin-card{background:var(--surface);border:1px solid var(--line);padding:clamp(1.8rem,3.5vw,2.8rem)}
+.twin-card .tag{display:block;margin-bottom:2.6rem}
+.twin-card h3{font-size:clamp(1.7rem,3.2vw,2.5rem)}
+.twin-card h3 span{font-size:.5em;font-weight:650;letter-spacing:.1em;color:var(--muted);margin-left:.6em;text-transform:uppercase}
+.twin-card p{margin-top:1.1rem;color:var(--ink-soft);line-height:1.8;font-size:.98rem}
+.name-close{
+  margin-top:clamp(2.6rem,5vw,4rem);font-size:var(--fs-mid);font-weight:700;letter-spacing:-.025em;
+  line-height:1.25;max-width:22ch;text-wrap:balance;
+}
+
+/* ============ 05 소개 ============ */
+.ab-rows{margin-top:1rem;border-bottom:1px solid var(--line)}
+.ab-row{
+  display:grid;grid-template-columns:11rem 1fr;gap:2rem;
+  padding:clamp(1.6rem,3vw,2.2rem) 0;border-top:1px solid var(--line);
+}
+.ab-tag{font-size:.72rem;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding-top:.5rem}
+.ab-row h3{font-size:clamp(1.2rem,2.2vw,1.65rem);letter-spacing:-.02em}
+.ab-row p{margin-top:.55rem;color:var(--muted);font-size:.95rem;line-height:1.75;max-width:58ch}
+.flow{display:flex;align-items:center;gap:1.4rem;margin-top:clamp(3rem,6vw,4.5rem)}
+.flow .end{white-space:nowrap}
+.flow .end b{display:block;font-size:1.05rem;font-weight:750;letter-spacing:-.01em}
+.flow-line{flex:1;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.6,0,.2,1)}
+.flow-line.draw{transform:scaleX(1)}
+.js .flow-line{transform:scaleX(0)}
+html:not(.js) .flow-line{transform:scaleX(1)}
+
+/* ============ 06 아카이브 ============ */
+.arc-list{border-bottom:1px solid var(--line);margin-top:1rem}
+.arc-row{
+  display:grid;grid-template-columns:7rem 1fr;gap:2rem;align-items:baseline;
+  padding:1.7rem .2rem;border-top:1px solid var(--line);
+}
+.arc-year{font-size:.78rem;font-weight:700;letter-spacing:.14em;color:var(--accent)}
+.arc-row h3{font-size:clamp(1.1rem,2vw,1.45rem);letter-spacing:-.015em}
+.arc-row p{margin-top:.4rem;color:var(--muted);font-size:.93rem}
+.arc-row.ghost{border-top-style:dashed;color:var(--muted)}
+.arc-row.ghost .arc-year{color:var(--muted)}
+.arc-row.ghost h3{color:var(--muted);font-weight:600}
+
+/* ============ 07 함께하기 ============ */
+.c-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1rem}
+.c-card{
+  display:block;text-decoration:none;border:1px solid var(--line-dark);
+  padding:clamp(1.8rem,3.5vw,2.6rem);transition:border-color .25s,background .25s;
+}
+.c-card:hover{border-color:var(--peach);background:rgba(246,246,244,.04)}
+.c-card .tag{display:flex;justify-content:space-between;margin-bottom:2.8rem}
+.c-card .arrow{color:var(--peach);transition:transform .25s;display:inline-block}
+.c-card:hover .arrow{transform:translate(3px,-3px)}
+.c-card h3{font-size:clamp(1.5rem,2.8vw,2.1rem)}
+.c-card p{margin-top:1rem;color:var(--on-dark-soft);font-size:.96rem;line-height:1.75}
+.direct{margin-top:3.2rem;display:flex;gap:.6rem 2.2rem;flex-wrap:wrap;align-items:baseline}
+.direct a{font-weight:700;text-decoration-color:var(--peach);text-underline-offset:6px}
+.direct a:hover{color:var(--peach)}
+
+/* ============ 푸터 ============ */
+footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
+.foot-mark{
+  font-size:clamp(3.4rem,15.5vw,12.5rem);font-weight:800;letter-spacing:-.045em;line-height:.9;
+  color:transparent;-webkit-text-stroke:1px rgba(246,246,244,.28);user-select:none;
+  text-align:center;transform:translateY(.08em);overflow:hidden;
+}
+.foot-bar{
+  border-top:1px solid var(--line-dark);margin-top:-.5rem;padding-top:1.6rem;
+  display:flex;justify-content:space-between;gap:1.4rem;flex-wrap:wrap;align-items:baseline;
+}
+.foot-bar p{font-size:.78rem;color:var(--on-dark-muted);line-height:1.8;max-width:52ch}
+.foot-bar .top{color:var(--on-dark);text-decoration:none;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.foot-bar .top:hover{color:var(--peach)}
+
+/* ============ 반응형 ============ */
+@media (max-width:840px){
+  .stats{grid-template-columns:1fr;gap:1.8rem}
+  .twin{grid-template-columns:1fr}
+  .c-cards{grid-template-columns:1fr}
+  .ab-row{grid-template-columns:1fr;gap:.5rem}
+  .ab-tag{padding-top:0}
+}
+@media (max-width:640px){
+  .work-row{grid-template-columns:2.6rem 1fr;grid-template-areas:"n b" ". b2"}
+  .w-num{grid-area:n}
+  .work-row .w-body{grid-area:b}
+  .w-tag{display:none}
+  .head-clock{display:none}
+  .arc-row{grid-template-columns:1fr;gap:.4rem}
+}
+/* ============ 움직임 최소화 설정 존중 ============ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none}
+  .js .flow-line{transform:scaleX(1)}
+  #menu{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 바로가기</a>
+
+<header>
+  <a class="wordmark" href="#hero">MEDISIGN<i>.</i></a>
+  <div class="head-right">
+    <span class="head-clock" data-clock aria-hidden="true">--:-- KST</span>
+    <button id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="메뉴 열기">
+      <span class="br">[</span> <span id="menuLabel">메뉴</span> <span class="br">]</span>
+    </button>
+  </div>
+</header>
+
+<!-- 전체 메뉴 오버레이 -->
+<div id="menu" role="dialog" aria-modal="true" aria-label="전체 메뉴">
+  <div class="container">
+    <nav aria-label="섹션 메뉴">
+      <ul>
+        <li><a href="#problem" style="--d:.05s"><span class="n">02</span>문제의식</a></li>
+        <li><a href="#work" style="--d:.1s"><span class="n">03</span>하는 일</a></li>
+        <li><a href="#name" style="--d:.15s"><span class="n">04</span>이름의 의미</a></li>
+        <li><a href="#about" style="--d:.2s"><span class="n">05</span>우리는 누구</a></li>
+        <li><a href="#archive" style="--d:.25s"><span class="n">06</span>아카이브</a></li>
+        <li><a href="#contact" style="--d:.3s"><span class="n">07</span>함께하기</a></li>
+      </ul>
+    </nav>
+    <div class="menu-meta micro">
+      <span>NURSING VOLUNTEER CLUB · EST. 2026</span>
+      <span data-clock>--:-- KST</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ============ 01 SIGNAL / 히어로 ============ -->
+<section id="hero" aria-label="메디사인 소개">
+  <div class="container" style="display:flex;flex-direction:column;flex:1;min-height:100%">
+    <div class="sec-head">
+      <span class="micro">01 / Signal</span>
+      <span class="micro">간호대학 봉사 동아리</span>
+    </div>
+    <h1 class="rv">말이 닿지 않는 곳에서,<br>몸의 <em>신호</em>를 읽습니다.</h1>
+    <p class="lead rv" style="--d:.15s">
+      메디사인(MEDISIGN)은 의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는
+      간호대학생 동아리입니다. 2026년, 우리의 첫 번째 프로젝트는
+      <strong>청각장애인의 의료 접근성</strong>입니다.
+    </p>
+    <div class="cta-row rv" style="--d:.3s">
+      <a class="cta" href="#contact"><span class="br">[</span> 함께하기 <span class="br">]</span></a>
+      <a class="cta ghost" href="#problem"><span class="br">[</span> 왜 필요한가요 ↓ <span class="br">]</span></a>
+    </div>
+    <div class="hero-meta">
+      <span class="micro">MEDI × SIGN — 수어로 묻고, 징후를 읽는 간호</span>
+      <span class="micro" data-clock aria-hidden="true">--:-- KST</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 PROBLEM / 문제의식 ============ -->
+<section id="problem" class="dark" aria-labelledby="problem-t">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro">02 / Problem</span>
+      <span class="micro">왜 필요한가</span>
+    </div>
+    <h2 id="problem-t" class="display rv">
+      <span class="quoteline">“어디가 어떻게 아프세요?”</span><br>
+      이 질문 앞에서 멈추는<br>사람들이 있습니다.
+    </h2>
+    <p class="lead rv" style="--d:.1s">
+      청각장애인 환자에게 진료실은 벽이 많은 곳입니다. 필담은 느리고 서로 놓치는 말이 많으며,
+      마스크는 입모양을 가립니다. 수어통역은 미리 예약해야 해서 갑작스러운 진료와 응급실에는
+      닿지 못할 때가 많습니다. 보호자가 대신 말하는 동안, 정작 환자 본인은
+      자신의 몸에 대한 대화에서 밀려납니다.
+    </p>
+    <div class="stats">
+      <div class="stat rv">
+        <div class="stat-num"><span data-count="449269">449,269</span><span class="unit">명</span></div>
+        <p class="stat-cap"><strong>등록 청각장애인 수.</strong> 전체 등록장애인의 17.1%로,
+          장애 유형 중 두 번째로 많습니다.</p>
+      </div>
+      <div class="stat rv" style="--d:.12s">
+        <div class="stat-num"><span data-count="26.9" data-decimals="1">26.9</span><span class="unit">%</span></div>
+        <p class="stat-cap"><strong>필담을 전혀 또는 거의 이해하지 못하는 비율.</strong>
+          ‘글로 쓰면 되지 않나요’가 답이 되지 못하는 이유입니다.</p>
+      </div>
+      <div class="stat rv" style="--d:.24s">
+        <div class="stat-num">1–2<span class="unit">주</span></div>
+        <p class="stat-cap"><strong>수어통역 파견에 보통 필요한 예약 기간.</strong>
+          그러나 아픈 날은 예약하고 찾아오지 않습니다.</p>
+      </div>
+    </div>
+    <p class="src rv">
+      출처 — 보건복지부 「등록장애인 현황」(2025년 말 기준) ·
+      국립국어원 「한국수어 사용 실태조사」(2017) ·
+      수어통역센터 이용 실태 보도(아름다운재단 이어뉴스) 종합
+    </p>
+  </div>
+</section>
+
+<!-- ============ 03 WORK / 하는 일 ============ -->
+<section id="work" aria-labelledby="work-t">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro">03 / Work</span>
+      <span class="micro" id="workIdx" aria-hidden="true">01 / 05</span>
+    </div>
+    <h2 id="work-t" class="display rv">말이 아니어도,<br>전할 방법을 만듭니다.</h2>
+    <p class="lead rv" style="--d:.1s">
+      거창한 구호 대신, 진료실에서 실제로 쓰이는 것들을 만듭니다.
+      올해 메디사인이 하는 다섯 가지 활동입니다.
+    </p>
+    <ul class="work-list rv" style="--d:.15s;margin-top:3rem">
+      <li class="work-row" data-idx="1">
+        <span class="w-num" aria-hidden="true">01</span>
+        <div class="w-body">
+          <h3>의료 수어 스터디</h3>
+          <p>“어디가 아프세요?”부터 검사 설명까지 — 진료 상황에서 쓰는 기초 수어를
+            정기 모임으로 함께 익힙니다. 모든 활동의 뼈대입니다.</p>
+        </div>
+        <span class="w-tag">Study</span>
+      </li>
+      <li class="work-row" data-idx="2">
+        <span class="w-num" aria-hidden="true">02</span>
+        <div class="w-body">
+          <h3>건강정보 접근성 콘텐츠</h3>
+          <p>병원 이용 절차와 건강 상식을 자막·수어 영상, 카드뉴스로 만들어 배포합니다.
+            결과물이 남는 활동이라 기록도 함께 쌓입니다.</p>
+        </div>
+        <span class="w-tag">Content</span>
+      </li>
+      <li class="work-row" data-idx="3">
+        <span class="w-num" aria-hidden="true">03</span>
+        <div class="w-body">
+          <h3>진료 소통 보드</h3>
+          <p>응급실·접수 상황에서 바로 쓸 수 있는 필담·그림 카드를 제작해
+            지역 병원과 보건소에 전하는 캠페인입니다.</p>
+        </div>
+        <span class="w-tag">Toolkit</span>
+      </li>
+      <li class="work-row" data-idx="4">
+        <span class="w-num" aria-hidden="true">04</span>
+        <div class="w-body">
+          <h3>기관 연계 건강교육 봉사</h3>
+          <p>농아인복지관과 함께 혈압·혈당 측정, 복약 교육 등 간호대의 강점을 살린
+            건강교육을 합니다. 기관과의 신뢰를 해마다 쌓아가는 핵심 활동입니다.</p>
+        </div>
+        <span class="w-tag">Outreach</span>
+      </li>
+      <li class="work-row" data-idx="5">
+        <span class="w-num" aria-hidden="true">05</span>
+        <div class="w-body">
+          <h3>교내 인식개선 캠페인</h3>
+          <p>수어 배우기 부스, 투명 마스크 캠페인 — 캠퍼스의 감수성을 넓히면서
+            새로운 동료를 만나는 자리이기도 합니다.</p>
+        </div>
+        <span class="w-tag">Campaign</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 04 NAME / 이름의 의미 ============ -->
+<section id="name" aria-labelledby="name-t" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro">04 / Name</span>
+      <span class="micro">MEDI × SIGN</span>
+    </div>
+    <h2 id="name-t" class="display rv">SIGN은<br>두 번 읽힙니다.</h2>
+    <div class="twin" style="margin-top:3rem">
+      <div class="twin-card rv">
+        <span class="tag micro">Sign ① — Language</span>
+        <h3>수어 <span>Sign Language</span></h3>
+        <p>청각장애인의 언어입니다. 우리는 환자의 언어로 인사하고, 묻고,
+          설명하는 법을 배웁니다. 통역을 기다리게 하는 대신, 먼저 다가가기 위해서요.</p>
+      </div>
+      <div class="twin-card rv" style="--d:.12s">
+        <span class="tag micro">Sign ② — Clinical</span>
+        <h3>징후 <span>Clinical Sign</span></h3>
+        <p>몸이 보내는 신호입니다. 환자가 증상(symptom)을 말로 전하기 어려울수록,
+          간호사는 징후(sign)를 더 세심하게 관찰하고 읽어내야 합니다.</p>
+      </div>
+    </div>
+    <p class="name-close rv">수어로 묻고, 징후를 읽는 간호.<br>그래서, MEDISIGN<em>.</em></p>
+  </div>
+</section>
+
+<!-- ============ 05 ABOUT / 우리는 누구 ============ -->
+<section id="about" aria-labelledby="about-t">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro">05 / About</span>
+      <span class="micro">우리는 누구</span>
+    </div>
+    <h2 id="about-t" class="display rv">간호대학생이<br>합니다.</h2>
+    <p class="lead rv" style="--d:.1s">
+      <!-- TODO: ○○대학교를 실제 학교명으로 바꿔주세요 -->
+      메디사인은 ○○대학교 간호대학 학생들이 만든 봉사 동아리입니다.
+      활력징후를 재고, 복약을 설명하고, 몸의 신호를 관찰하는 법을 배우는 사람들 —
+      그래서 우리의 봉사는 마음만이 아니라 <strong>전공으로 하는 봉사</strong>입니다.
+    </p>
+    <div class="ab-rows rv" style="--d:.15s;margin-top:3rem">
+      <div class="ab-row">
+        <span class="ab-tag">비전 · 고정</span>
+        <div>
+          <h3>의료 현장에서 소통이 어려운 사람들의 건강권</h3>
+          <p>동아리가 향하는 큰 우산입니다. 우리는 ‘모든 것’을 하려 하지 않고,
+            의료 커뮤니케이션 접근성이라는 하나의 축을 깊게 팝니다.</p>
+        </div>
+      </div>
+      <div class="ab-row">
+        <span class="ab-tag">핵심 사업 · 매년 지속</span>
+        <div>
+          <h3>청각장애인의 의료 접근성</h3>
+          <p>메디사인의 간판 활동입니다. 수어 실력과 농문화 이해, 기관과의 신뢰는
+            1년으로 완성되지 않기에, 해마다 이어가며 깊어집니다.</p>
+        </div>
+      </div>
+      <div class="ab-row">
+        <span class="ab-tag">확장 · 매년 +1</span>
+        <div>
+          <h3>‘소통 약자’를 향한 한 걸음씩</h3>
+          <p>역량이 쌓이는 만큼 넓힙니다. 발달장애인을 위한 쉬운 글 건강자료,
+            외국인 환자의 언어장벽, 고령자 건강 문해력 — 해마다 하나씩, 같은 축 위에서.</p>
+        </div>
+      </div>
+    </div>
+    <div class="flow rv" aria-hidden="true">
+      <span class="end micro">Signal<b>몸의 신호</b></span>
+      <span class="flow-line"></span>
+      <span class="end micro" style="text-align:right">Right to Health<b>모두의 건강권</b></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 ARCHIVE / 아카이브 ============ -->
+<section id="archive" aria-labelledby="archive-t" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro">06 / Archive</span>
+      <span class="micro">기록</span>
+    </div>
+    <h2 id="archive-t" class="display rv">기록이<br>쌓이는 중입니다.</h2>
+    <p class="lead rv" style="--d:.1s">
+      2026년에 시작한 신생 동아리에게 화려한 실적은 아직 없습니다.
+      대신 지금부터의 기록을 약속합니다. 활동이 하나 끝날 때마다, 이 자리에 하나씩 채워집니다.
+    </p>
+    <div class="arc-list rv" style="--d:.15s;margin-top:3rem">
+      <div class="arc-row">
+        <span class="arc-year">2026</span>
+        <div>
+          <h3>메디사인 창립</h3>
+          <p>첫 번째 프로젝트 ‘청각장애인의 의료 접근성’ 시작.</p>
+        </div>
+      </div>
+      <!-- 활동이 끝나면 위 형식대로 한 줄씩 추가하세요 -->
+      <div class="arc-row ghost">
+        <span class="arc-year">Next</span>
+        <div><h3>다음 기록을 준비하고 있습니다</h3></div>
+      </div>
+      <div class="arc-row ghost">
+        <span class="arc-year">And</span>
+        <div><h3>이 줄은, 어쩌면 당신과 함께 채워질지도요</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 CONTACT / 함께하기 ============ -->
+<section id="contact" class="dark" aria-labelledby="contact-t">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro">07 / Contact</span>
+      <span class="micro">함께하기</span>
+    </div>
+    <h2 id="contact-t" class="display rv">함께<br>신호를 읽어요.</h2>
+    <div class="c-cards" style="margin-top:3rem">
+      <!-- TODO: mailto 주소를 실제 동아리 이메일로 바꿔주세요 (2곳) -->
+      <a class="c-card rv" href="mailto:medisign.official@gmail.com?subject=[가입문의]%20MEDISIGN">
+        <span class="tag micro">For Students <span class="arrow">↗</span></span>
+        <h3>가입 문의</h3>
+        <p>간호대학 재학생이라면 학년 무관. 수어를 몰라도 괜찮습니다 —
+          같이 배우는 것부터가 활동이니까요.</p>
+      </a>
+      <a class="c-card rv" style="--d:.12s" href="mailto:medisign.official@gmail.com?subject=[협력문의]%20MEDISIGN">
+        <span class="tag micro">For Partners <span class="arrow">↗</span></span>
+        <h3>기관 협력</h3>
+        <p>복지관·병원·보건소·학교. 건강교육, 콘텐츠 제작, 캠페인을
+          함께할 기관을 기다립니다.</p>
+      </a>
+    </div>
+    <div class="direct rv" style="--d:.2s">
+      <span class="micro">or write directly</span>
+      <!-- TODO: 실제 이메일/인스타그램 계정으로 바꿔주세요 -->
+      <a href="mailto:medisign.official@gmail.com">medisign.official@gmail.com</a>
+      <a href="https://instagram.com/medisign.official" rel="noopener">@medisign.official</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="dark">
+  <div class="foot-mark" aria-hidden="true">MEDISIGN</div>
+  <div class="container">
+    <div class="foot-bar">
+      <p>이 사이트는 모두가 읽을 수 있도록 만들었습니다 — 충분한 명도 대비, 키보드 탐색,
+        움직임 줄이기 설정 지원(KWCAG 기반). 불편한 점을 알려주시면 바로 고치겠습니다.</p>
+      <p>© <span data-year>2026</span> MEDISIGN · NURSING VOLUNTEER CLUB</p>
+      <a class="top" href="#hero">맨 위로 ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 라이브 시계 (KST) */
+  function tick(){
+    var t = new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
+    document.querySelectorAll('[data-clock]').forEach(function(el){ el.textContent = t + ' KST'; });
+  }
+  tick(); setInterval(tick, 10000);
+  document.querySelectorAll('[data-year]').forEach(function(el){ el.textContent = new Date().getFullYear(); });
+
+  /* 메뉴 오버레이 */
+  var btn = document.getElementById('menuBtn');
+  var menu = document.getElementById('menu');
+  var label = document.getElementById('menuLabel');
+  var lastFocus = null;
+  function setMenu(open){
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    label.textContent = open ? '닫기' : '메뉴';
+    document.body.classList.toggle('lock', open);
+    if(open){ lastFocus = document.activeElement; menu.querySelector('a').focus(); }
+    else if(lastFocus){ lastFocus.focus(); }
+  }
+  btn.addEventListener('click', function(){ setMenu(!menu.classList.contains('open')); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  document.addEventListener('keydown', function(e){
+    if(!menu.classList.contains('open')) return;
+    if(e.key === 'Escape'){ setMenu(false); }
+    if(e.key === 'Tab'){ /* 포커스를 오버레이 안에 가둠 */
+      var f = [].slice.call(menu.querySelectorAll('a')); f.unshift(btn);
+      var i = f.indexOf(document.activeElement);
+      if(e.shiftKey && i <= 0){ e.preventDefault(); f[f.length-1].focus(); }
+      else if(!e.shiftKey && i === f.length-1){ e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  /* 스크롤 등장 */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  /* 옵저버가 못 도는 환경에서도 화면 안 요소는 반드시 보이게 */
+  function revealInView(){
+    document.querySelectorAll('.rv:not(.in)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+    });
+  }
+  setTimeout(revealInView, 500);
+  window.addEventListener('scroll', revealInView, {passive:true});
+
+  /* 숫자 카운터 */
+  function animateCount(el){
+    var target = parseFloat(el.dataset.count);
+    var dec = parseInt(el.dataset.decimals || '0', 10);
+    if(reduced){ el.textContent = target.toLocaleString('ko-KR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); return; }
+    var t0 = null, dur = 1500;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts - t0)/dur, 1);
+      var e = 1 - Math.pow(1 - p, 4); /* easeOutQuart */
+      var v = target * e;
+      el.textContent = v.toLocaleString('ko-KR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ animateCount(en.target); cio.unobserve(en.target); }
+    });
+  }, {threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+
+  /* 하는 일 — 인덱스 표시 */
+  var idx = document.getElementById('workIdx');
+  var rows = document.querySelectorAll('.work-row');
+  rows.forEach(function(r){
+    r.addEventListener('mouseenter', function(){ idx.textContent = '0' + r.dataset.idx + ' / 05'; });
+  });
+  var wio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ idx.textContent = '0' + en.target.dataset.idx + ' / 05'; }
+    });
+  }, {rootMargin:'-45% 0px -45% 0px'});
+  rows.forEach(function(r){ wio.observe(r); });
+
+  /* 선 그리기 */
+  var lio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('draw'); lio.unobserve(en.target); }
+    });
+  }, {threshold:.6});
+  document.querySelectorAll('.flow-line').forEach(function(el){ lio.observe(el); });
+})();
+</script>
+</body>
+</html>
