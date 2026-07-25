@@ -14,8 +14,7 @@
 
 `index.html` 안의 `TODO` 주석을 검색하면 바꿀 곳이 나옵니다.
 
-1. `medisign.official@gmail.com` → 실제 동아리 이메일 (07 Contact 섹션, 3곳)
-2. `@medisign.official` → 실제 인스타그램 계정
+1. 동아리 이메일이 생기면 07 Contact 섹션에 mailto 링크 추가 (현재 문의는 인스타그램 `@medisign.2026`으로 연결)
 
 활동이 하나 끝날 때마다 `06 Archive` 섹션의 형식대로 한 줄씩 추가하면 됩니다.
 
