@@ -9,11 +9,11 @@
 <meta property="og:description" content="의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는 간호대학생 봉사 동아리">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#F2F1EB">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231D39F5'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%23F6F6F4' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230E6E45'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%23F6F6F4' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
 <style>
 /* ============ 디자인 토큰 ============ */
 :root{
@@ -23,14 +23,15 @@
   --ink-soft:#3A3A36;
   --muted:#706E63;
   --line:rgba(18,18,16,.14);
-  --accent:#1D39F5;     /* 포인트 블루 */
-  --peach:#FFD0C2;
+  --accent:#0E6E45;     /* 포인트 그린 (밝은 배경용) */
+  --mint:#5FD39B;       /* 포인트 그린 (어두운 배경용) */
   --on-dark:#F6F6F4;
   --on-dark-soft:rgba(246,246,244,.78);
   --on-dark-muted:rgba(246,246,244,.55);
   --line-dark:rgba(246,246,244,.18);
   --font:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
-  --serif:'Playfair Display','Noto Serif KR','Nanum Myeongjo',Georgia,serif;
+  /* 라틴만 세리프 이탤릭 → 한글은 Pretendard로 폴백되어 깔끔하게 유지됨 */
+  --serif:'Playfair Display',Georgia,'Pretendard Variable',Pretendard,serif;
   --fs-display:clamp(2.35rem,7vw,5.4rem);
   --fs-mid:clamp(1.6rem,3.4vw,2.6rem);
   --pad-sec:clamp(5.5rem,11vw,9.5rem);
@@ -40,27 +41,32 @@ html{scroll-padding-top:5.5rem}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{
   background:var(--paper);color:var(--ink);
-  font-family:var(--font);font-size:16px;line-height:1.7;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  font-family:var(--font);font-size:16px;line-height:1.7;font-weight:400;
+  letter-spacing:-.011em;word-break:keep-all;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;
 }
 body.lock{overflow:hidden}
 ::selection{background:var(--accent);color:var(--on-dark)}
 a{color:inherit}
 ul{list-style:none}
-h1,h2,h3{line-height:1.05;letter-spacing:-.03em;font-weight:700}
-/* 세리프 악센트 — 라틴은 이탤릭, 한글은 정자 명조로 (가짜 기울임 방지) */
-em{font-style:italic;color:var(--accent);font-family:var(--serif);font-weight:600;font-synthesis:weight;letter-spacing:0}
-i{font-style:italic;font-family:var(--serif);font-weight:600;font-synthesis:weight;letter-spacing:0}
+h1,h2,h3{line-height:1.08;letter-spacing:-.035em;font-weight:600;word-break:keep-all}
+/* 악센트 — 기본은 Pretendard 정자 + 초록 (한글이 기울거나 명조가 되지 않게) */
+em,i{font-style:normal;font-family:var(--font);font-weight:600;letter-spacing:-.03em}
+em{color:var(--accent)}
+.dark em{color:var(--mint)}
+/* .en = 라틴 전용. 여기에만 세리프 이탤릭을 씀 */
+.en{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:.01em;font-synthesis:weight}
 
 /* 접근성: 스킵 링크 + 포커스 표시 */
 .skip{position:fixed;left:1rem;top:-4rem;z-index:200;background:var(--ink);color:var(--on-dark);
   padding:.7rem 1.2rem;font-weight:700;text-decoration:none;transition:top .2s}
 .skip:focus{top:1rem}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.dark :focus-visible,#menu :focus-visible{outline-color:var(--peach)}
+.dark :focus-visible,#menu :focus-visible{outline-color:var(--mint)}
 
 .container{width:min(1180px,92vw);margin-inline:auto}
-.micro{font-family:var(--serif);font-style:italic;font-synthesis:weight;font-size:.8rem;font-weight:600;letter-spacing:.07em;color:var(--muted)}
+.micro{font-family:var(--font);font-size:.79rem;font-weight:500;letter-spacing:.02em;color:var(--muted)}
+.micro.en{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:.05em;font-size:.83rem}
 .dark .micro{color:var(--on-dark-muted)}
 
 /* ============ 헤더 (difference 블렌드로 다크 섹션 위에서 자동 반전) ============ */
@@ -70,16 +76,15 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   padding:1.1rem 4vw;
 }
-.wordmark{font-weight:800;letter-spacing:-.02em;font-size:1.05rem;text-decoration:none}
-.wordmark i{font-style:normal;color:#E2C60A}/* difference 위에서 파랑으로 보임 */
+.wordmark{font-weight:700;letter-spacing:-.02em;font-size:1.02rem;text-decoration:none}
+.wordmark i,#menuBtn .br{font-family:inherit;font-style:normal;color:#E483A6}/* difference 반전 시 초록으로 보임 */
 .head-right{display:flex;align-items:center;gap:1.6rem}
 .head-clock{font-size:.72rem;font-weight:650;letter-spacing:.16em}
 #menuBtn{
   background:none;border:0;cursor:pointer;color:inherit;font-family:inherit;
-  font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   padding:.4rem .2rem;
 }
-#menuBtn .br{color:#E2C60A;font-weight:800}
 
 /* ============ 메뉴 오버레이 ============ */
 #menu{
@@ -92,20 +97,20 @@ header{
 #menu nav ul{display:flex;flex-direction:column;gap:.2rem}
 #menu nav a{
   display:flex;align-items:baseline;gap:1.4rem;text-decoration:none;
-  font-size:clamp(1.7rem,4.6vw,3.3rem);font-weight:700;letter-spacing:-.02em;
-  padding:.45rem 0;border-bottom:1px solid var(--line-dark);
+  font-size:clamp(1.35rem,3.6vw,2.35rem);font-weight:600;letter-spacing:-.03em;
+  padding:.42rem 0;border-bottom:1px solid var(--line-dark);
   opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,color .2s;
   transition-delay:var(--d,0s);
 }
 #menu.open nav a{opacity:1;transform:none}
-#menu nav a:hover{color:var(--peach)}
+#menu nav a:hover{color:var(--mint)}
 #menu nav a .n{font-family:var(--serif);font-style:italic;font-size:.85rem;font-weight:600;color:var(--on-dark-muted);min-width:3.2rem}
 #menu .menu-meta{
   display:flex;justify-content:space-between;gap:1rem 2rem;flex-wrap:wrap;
   margin-top:3rem;color:var(--on-dark-muted);
 }
-#menu .menu-meta a{color:var(--on-dark-soft);text-decoration-color:var(--peach);text-underline-offset:5px}
-#menu .menu-meta a:hover{color:var(--peach)}
+#menu .menu-meta a{color:var(--on-dark-soft);text-decoration-color:var(--mint);text-underline-offset:5px}
+#menu .menu-meta a:hover{color:var(--mint)}
 
 /* ============ 섹션 공통 ============ */
 section{padding-block:var(--pad-sec)}
@@ -137,20 +142,20 @@ section{padding-block:var(--pad-sec)}
 }
 .cta-row{display:flex;gap:1.6rem;flex-wrap:wrap;margin-top:2.6rem}
 .cta{
-  text-decoration:none;font-weight:700;font-size:1rem;letter-spacing:.01em;
+  text-decoration:none;font-weight:600;font-size:1rem;letter-spacing:-.01em;
   display:inline-flex;gap:.55em;align-items:baseline;
 }
-.cta .br{color:var(--accent);font-weight:800;transition:letter-spacing .25s,transform .25s;display:inline-block}
+.cta .br{color:var(--accent);font-weight:600;transition:letter-spacing .25s,transform .25s;display:inline-block}
 .cta:hover .br:first-child{transform:translateX(-4px)}
 .cta:hover .br:last-child{transform:translateX(4px)}
 .cta.ghost{color:var(--muted)}
-.dark .cta .br{color:var(--peach)}
+.dark .cta .br{color:var(--mint)}
 
 /* ============ 02 문제 ============ */
-.quoteline{color:var(--on-dark-muted);font-family:var(--serif);font-style:italic;font-weight:600;font-synthesis:weight}
+.quoteline{color:var(--on-dark-muted);font-weight:400;letter-spacing:-.03em}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;margin-top:clamp(3rem,6vw,4.5rem)}
 .stat{border-top:1px solid var(--line-dark);padding-top:1.4rem}
-.stat-num{font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:750;letter-spacing:-.03em;line-height:1.1}
+.stat-num{font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:600;letter-spacing:-.04em;line-height:1.1;font-feature-settings:'tnum'}
 .stat-num .unit{font-size:.45em;font-weight:650;margin-left:.15em;color:var(--on-dark-soft)}
 .stat-cap{margin-top:.9rem;font-size:.92rem;line-height:1.65;color:var(--on-dark-soft);max-width:30ch}
 .stat-cap strong{color:var(--on-dark);font-weight:700}
@@ -170,7 +175,7 @@ section{padding-block:var(--pad-sec)}
 .work-row:hover::before{transform:scaleY(1)}
 .work-row:hover h3,.work-row:hover .w-num{color:var(--on-dark)}
 .work-row:hover p{color:rgba(246,246,244,.85)}
-.work-row:hover .w-tag{color:var(--peach)}
+.work-row:hover .w-tag{color:var(--mint)}
 .w-num{font-size:.78rem;font-weight:650;letter-spacing:.14em;color:var(--muted)}
 .work-row h3{font-size:clamp(1.25rem,2.4vw,1.8rem);letter-spacing:-.02em}
 .work-row p{margin-top:.5rem;color:var(--muted);font-size:.95rem;line-height:1.7;max-width:52ch}
@@ -184,7 +189,7 @@ section{padding-block:var(--pad-sec)}
 .twin-card h3 span{font-family:var(--serif);font-style:italic;font-size:.42em;font-weight:600;letter-spacing:.04em;color:var(--muted);margin-left:.6em}
 .twin-card p{margin-top:1.1rem;color:var(--ink-soft);line-height:1.8;font-size:.98rem}
 .name-close{
-  margin-top:clamp(2.6rem,5vw,4rem);font-size:var(--fs-mid);font-weight:700;letter-spacing:-.025em;
+  margin-top:clamp(2.6rem,5vw,4rem);font-size:var(--fs-mid);font-weight:600;letter-spacing:-.035em;
   line-height:1.25;max-width:22ch;text-wrap:balance;
 }
 
@@ -199,7 +204,7 @@ section{padding-block:var(--pad-sec)}
 .ab-row p{margin-top:.55rem;color:var(--muted);font-size:.95rem;line-height:1.75;max-width:58ch}
 .flow{display:flex;align-items:center;gap:1.4rem;margin-top:clamp(3rem,6vw,4.5rem)}
 .flow .end{white-space:nowrap}
-.flow .end b{display:block;font-size:1.05rem;font-weight:750;letter-spacing:-.01em}
+.flow .end b{display:block;font-size:1.02rem;font-weight:600;letter-spacing:-.02em}
 .flow-line{flex:1;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.6,0,.2,1)}
 .flow-line.draw{transform:scaleX(1)}
 .js .flow-line{transform:scaleX(0)}
@@ -211,28 +216,70 @@ html:not(.js) .flow-line{transform:scaleX(1)}
   display:grid;grid-template-columns:7rem 1fr;gap:2rem;align-items:baseline;
   padding:1.7rem .2rem;border-top:1px solid var(--line);
 }
-.arc-year{font-size:.78rem;font-weight:700;letter-spacing:.14em;color:var(--accent)}
+.arc-year{font-size:.8rem;font-weight:600;letter-spacing:.1em;color:var(--accent)}
 .arc-row h3{font-size:clamp(1.1rem,2vw,1.45rem);letter-spacing:-.015em}
 .arc-row p{margin-top:.4rem;color:var(--muted);font-size:.93rem}
 .arc-row.ghost{border-top-style:dashed;color:var(--muted)}
 .arc-row.ghost .arc-year{color:var(--muted)}
 .arc-row.ghost h3{color:var(--muted);font-weight:600}
 
-/* ============ 07 함께하기 ============ */
+/* ============ 07 갤러리 ============ */
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.gal figure{margin:0}
+.gal .frame{
+  position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--surface);
+  border:1px solid var(--line);
+}
+.gal .frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.5,0,.2,1)}
+.gal figure:hover .frame img{transform:scale(1.04)}
+/* 사진이 아직 없을 때의 빈 자리 */
+.gal .empty{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  color:var(--muted);font-size:.82rem;line-height:1.6;padding:1.2rem;
+  background:
+    repeating-linear-gradient(-45deg,transparent 0 9px,rgba(18,18,16,.045) 9px 10px),
+    var(--surface);
+}
+.gal figcaption{margin-top:.85rem;font-size:.9rem;color:var(--ink-soft);line-height:1.6}
+.gal figcaption .when{display:block;margin-top:.2rem;font-size:.78rem;color:var(--muted)}
+.gal-note{
+  margin-top:2.4rem;padding-top:1.2rem;border-top:1px solid var(--line);
+  font-size:.86rem;color:var(--muted);max-width:56ch;
+}
+
+/* ============ 08 FAQ ============ */
+.faq{border-bottom:1px solid var(--line-dark);margin-top:1rem}
+.faq details{border-top:1px solid var(--line-dark)}
+.faq summary{
+  list-style:none;cursor:pointer;padding:1.5rem .2rem;
+  display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;
+  font-size:clamp(1.02rem,1.9vw,1.3rem);font-weight:600;letter-spacing:-.025em;
+  transition:color .2s;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--mint)}
+.faq summary .pm{flex:none;color:var(--mint);font-size:1.3rem;line-height:1;transition:transform .3s}
+.faq details[open] summary .pm{transform:rotate(45deg)}
+.faq details p{
+  padding:0 .2rem 1.7rem;margin-top:-.3rem;max-width:62ch;
+  color:var(--on-dark-soft);font-size:.97rem;line-height:1.85;
+}
+
+/* ============ 09 함께하기 ============ */
 .c-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1rem}
 .c-card{
   display:block;text-decoration:none;border:1px solid var(--line-dark);
   padding:clamp(1.8rem,3.5vw,2.6rem);transition:border-color .25s,background .25s;
 }
-.c-card:hover{border-color:var(--peach);background:rgba(246,246,244,.04)}
+.c-card:hover{border-color:var(--mint);background:rgba(246,246,244,.04)}
 .c-card .tag{display:flex;justify-content:space-between;margin-bottom:2.8rem}
-.c-card .arrow{color:var(--peach);transition:transform .25s;display:inline-block}
+.c-card .arrow{color:var(--mint);transition:transform .25s;display:inline-block}
 .c-card:hover .arrow{transform:translate(3px,-3px)}
 .c-card h3{font-size:clamp(1.5rem,2.8vw,2.1rem)}
 .c-card p{margin-top:1rem;color:var(--on-dark-soft);font-size:.96rem;line-height:1.75}
 .direct{margin-top:3.2rem;display:flex;gap:.6rem 2.2rem;flex-wrap:wrap;align-items:baseline}
-.direct a{font-weight:700;text-decoration-color:var(--peach);text-underline-offset:6px}
-.direct a:hover{color:var(--peach)}
+.direct a{font-weight:600;text-decoration-color:var(--mint);text-underline-offset:6px}
+.direct a:hover{color:var(--mint)}
 
 /* ============ 푸터 ============ */
 footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
@@ -255,14 +302,41 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   display:flex;justify-content:space-between;gap:1.4rem;flex-wrap:wrap;align-items:baseline;
 }
 .foot-bar p{font-size:.78rem;color:var(--on-dark-muted);line-height:1.8;max-width:52ch}
-.foot-bar .top{color:var(--on-dark);text-decoration:none;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-.foot-bar .top:hover{color:var(--peach)}
+.foot-bar .top{color:var(--on-dark);text-decoration:none;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.foot-bar .top:hover{color:var(--mint)}
+
+/* ============ 00 시작화면 (인트로) ============ */
+#intro{
+  position:fixed;inset:0;z-index:300;background:var(--ink);color:var(--on-dark);
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:clamp(1.6rem,4vw,2.6rem) 4vw;
+  transition:transform .9s cubic-bezier(.76,0,.24,1);
+}
+#intro.done{transform:translateY(-101%)}
+.intro-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.intro-mid{display:flex;flex-direction:column;justify-content:center;flex:1;padding-block:2rem}
+.intro-line{
+  font-size:clamp(1.5rem,4.6vw,3.2rem);font-weight:600;letter-spacing:-.04em;line-height:1.2;
+  max-width:18ch;
+}
+.intro-line span{display:block;opacity:0;transform:translateY(18px);
+  animation:introUp .8s cubic-bezier(.2,.7,.3,1) forwards;animation-delay:var(--d,0s)}
+@keyframes introUp{to{opacity:1;transform:none}}
+.intro-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem}
+.intro-count{font-size:clamp(2.6rem,9vw,6rem);font-weight:600;letter-spacing:-.05em;line-height:.9;font-feature-settings:'tnum'}
+.intro-bar{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--mint);transform:scaleX(0);transform-origin:left}
+#introSkip{
+  background:none;border:0;cursor:pointer;color:var(--on-dark-muted);font-family:inherit;
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem;
+}
+#introSkip:hover{color:var(--mint)}
 
 /* ============ 반응형 ============ */
 @media (max-width:840px){
   .stats{grid-template-columns:1fr;gap:1.8rem}
   .twin{grid-template-columns:1fr}
   .c-cards{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr 1fr}
   .ab-row{grid-template-columns:1fr;gap:.5rem}
   .ab-tag{padding-top:0}
 }
@@ -273,6 +347,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   .w-tag{display:none}
   .head-clock{display:none}
   .arc-row{grid-template-columns:1fr;gap:.4rem}
+  .gal{grid-template-columns:1fr;gap:1.6rem}
 }
 /* ============ 움직임 최소화 설정 존중 ============ */
 @media (prefers-reduced-motion:reduce){
@@ -280,16 +355,36 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   .js .rv{opacity:1;transform:none}
   .js .flow-line{transform:scaleX(1)}
   #menu{transform:none}
+  .intro-line span{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
+<!-- 시작화면 — 첫 방문에만 잠깐 뜨고 사라집니다 (JS가 켜져 있을 때만) -->
+<div id="intro" hidden aria-hidden="true">
+  <div class="intro-top">
+    <span class="wordmark">MEDISIGN<i>.</i></span>
+    <span class="micro en" lang="en" style="color:var(--on-dark-muted)">Est. 2026</span>
+  </div>
+  <div class="intro-mid">
+    <p class="intro-line">
+      <span style="--d:.05s">말이 닿지 않는 곳에서,</span>
+      <span style="--d:.25s">몸의 신호를 읽습니다.</span>
+    </p>
+  </div>
+  <div class="intro-bottom">
+    <span class="intro-count" lang="en">0</span>
+    <button id="introSkip" type="button">건너뛰기</button>
+  </div>
+  <span class="intro-bar"></span>
+</div>
+
 <a class="skip" href="#main">본문으로 바로가기</a>
 
 <header>
   <a class="wordmark" href="#hero">MEDISIGN<i>.</i></a>
   <div class="head-right">
-    <span class="head-clock" data-clock aria-hidden="true">--:-- KST</span>
+    <span class="head-clock" data-clock lang="en" aria-hidden="true">--:-- KST</span>
     <button id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="메뉴 열기">
       <span class="br">[</span> <span id="menuLabel">메뉴</span> <span class="br">]</span>
     </button>
@@ -301,19 +396,21 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   <div class="container">
     <nav aria-label="섹션 메뉴">
       <ul>
-        <li><a href="#problem" style="--d:.05s"><span class="n">02</span>문제의식</a></li>
-        <li><a href="#work" style="--d:.1s"><span class="n">03</span>하는 일</a></li>
-        <li><a href="#name" style="--d:.15s"><span class="n">04</span>이름의 의미</a></li>
-        <li><a href="#about" style="--d:.2s"><span class="n">05</span>우리는 누구</a></li>
-        <li><a href="#archive" style="--d:.25s"><span class="n">06</span>아카이브</a></li>
-        <li><a href="#contact" style="--d:.3s"><span class="n">07</span>함께하기</a></li>
+        <li><a href="#problem" style="--d:.04s"><span class="n" lang="en">02</span>문제의식</a></li>
+        <li><a href="#work" style="--d:.08s"><span class="n" lang="en">03</span>하는 일</a></li>
+        <li><a href="#name" style="--d:.12s"><span class="n" lang="en">04</span>이름의 의미</a></li>
+        <li><a href="#about" style="--d:.16s"><span class="n" lang="en">05</span>우리는 누구</a></li>
+        <li><a href="#archive" style="--d:.2s"><span class="n" lang="en">06</span>아카이브</a></li>
+        <li><a href="#gallery" style="--d:.24s"><span class="n" lang="en">07</span>갤러리</a></li>
+        <li><a href="#faq" style="--d:.28s"><span class="n" lang="en">08</span>자주 묻는 질문</a></li>
+        <li><a href="#contact" style="--d:.32s"><span class="n" lang="en">09</span>함께하기</a></li>
       </ul>
     </nav>
     <div class="menu-meta micro">
       <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">Instagram — @medisign.2026</a>
       <!-- TODO: 이메일이 생기면 아래 주석을 풀고 주소를 채우세요
       <a href="mailto:이메일주소">이메일주소</a> -->
-      <span>EST. 2026</span>
+      <span class="en" lang="en">EST. 2026</span>
       <span data-clock>--:-- KST</span>
     </div>
   </div>
@@ -325,7 +422,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <section id="hero" aria-label="메디사인 소개">
   <div class="container" style="display:flex;flex-direction:column;flex:1;min-height:100%">
     <div class="sec-head">
-      <span class="micro">01 / Signal</span>
+      <span class="micro en" lang="en">01 / Signal</span>
       <span class="micro">기독간호대학교 봉사 동아리</span>
     </div>
     <h1 class="rv">말이 닿지 않는 곳에서,<br>몸의 <em>신호</em>를 읽습니다.</h1>
@@ -340,7 +437,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     </div>
     <div class="hero-meta">
       <span class="micro">MEDI × SIGN — 수어로 묻고, 징후를 읽는 간호</span>
-      <span class="micro" data-clock aria-hidden="true">--:-- KST</span>
+      <span class="micro" data-clock lang="en" aria-hidden="true">--:-- KST</span>
     </div>
   </div>
 </section>
@@ -349,7 +446,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <section id="problem" class="dark" aria-labelledby="problem-t">
   <div class="container">
     <div class="sec-head">
-      <span class="micro">02 / Problem</span>
+      <span class="micro en" lang="en">02 / Problem</span>
       <span class="micro">왜 필요한가</span>
     </div>
     <h2 id="problem-t" class="display rv">
@@ -391,10 +488,10 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <section id="work" aria-labelledby="work-t">
   <div class="container">
     <div class="sec-head">
-      <span class="micro">03 / Work</span>
+      <span class="micro en" lang="en">03 / Work</span>
       <span class="micro" id="workIdx" aria-hidden="true">01 / 05</span>
     </div>
-    <h2 id="work-t" class="display rv">말이 아니어도,<br>전할 <i>방법</i>을 만듭니다.</h2>
+    <h2 id="work-t" class="display rv">말이 아니어도,<br>전할 <em>방법</em>을 만듭니다.</h2>
     <p class="lead rv" style="--d:.1s">
       거창한 구호 대신, 진료실에서 실제로 쓰이는 것들을 만듭니다.
       올해 메디사인이 하는 다섯 가지 활동입니다.
@@ -407,7 +504,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>“어디가 아프세요?”부터 검사 설명까지 — 진료 상황에서 쓰는 기초 수어를
             정기 모임으로 함께 익힙니다. 모든 활동의 뼈대입니다.</p>
         </div>
-        <span class="w-tag">Study</span>
+        <span class="w-tag en" lang="en">Study</span>
       </li>
       <li class="work-row" data-idx="2">
         <span class="w-num" aria-hidden="true">02</span>
@@ -416,7 +513,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>병원 이용 절차와 건강 상식을 자막·수어 영상, 카드뉴스로 만들어 배포합니다.
             결과물이 남는 활동이라 기록도 함께 쌓입니다.</p>
         </div>
-        <span class="w-tag">Content</span>
+        <span class="w-tag en" lang="en">Content</span>
       </li>
       <li class="work-row" data-idx="3">
         <span class="w-num" aria-hidden="true">03</span>
@@ -425,7 +522,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>응급실·접수 상황에서 바로 쓸 수 있는 필담·그림 카드를 제작해
             지역 병원과 보건소에 전하는 캠페인입니다.</p>
         </div>
-        <span class="w-tag">Toolkit</span>
+        <span class="w-tag en" lang="en">Toolkit</span>
       </li>
       <li class="work-row" data-idx="4">
         <span class="w-num" aria-hidden="true">04</span>
@@ -434,7 +531,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>농아인복지관과 함께 혈압·혈당 측정, 복약 교육 등 간호대의 강점을 살린
             건강교육을 합니다. 기관과의 신뢰를 해마다 쌓아가는 핵심 활동입니다.</p>
         </div>
-        <span class="w-tag">Outreach</span>
+        <span class="w-tag en" lang="en">Outreach</span>
       </li>
       <li class="work-row" data-idx="5">
         <span class="w-num" aria-hidden="true">05</span>
@@ -443,7 +540,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>수어 배우기 부스, 투명 마스크 캠페인 — 캠퍼스의 감수성을 넓히면서
             새로운 동료를 만나는 자리이기도 합니다.</p>
         </div>
-        <span class="w-tag">Campaign</span>
+        <span class="w-tag en" lang="en">Campaign</span>
       </li>
     </ul>
   </div>
@@ -453,25 +550,25 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <section id="name" aria-labelledby="name-t" style="padding-top:0">
   <div class="container">
     <div class="sec-head">
-      <span class="micro">04 / Name</span>
+      <span class="micro en" lang="en">04 / Name</span>
       <span class="micro">MEDI × SIGN</span>
     </div>
-    <h2 id="name-t" class="display rv"><i>SIGN</i>은<br>두 번 읽힙니다.</h2>
+    <h2 id="name-t" class="display rv"><em class="en" lang="en">SIGN</em>은<br>두 번 읽힙니다.</h2>
     <div class="twin" style="margin-top:3rem">
       <div class="twin-card rv">
-        <span class="tag micro">Sign ① — Language</span>
-        <h3>수어 <span>Sign Language</span></h3>
+        <span class="tag micro en" lang="en">Sign ① — Language</span>
+        <h3>수어 <span class="en" lang="en">Sign Language</span></h3>
         <p>청각장애인의 언어입니다. 우리는 환자의 언어로 인사하고, 묻고,
           설명하는 법을 배웁니다. 통역을 기다리게 하는 대신, 먼저 다가가기 위해서요.</p>
       </div>
       <div class="twin-card rv" style="--d:.12s">
-        <span class="tag micro">Sign ② — Clinical</span>
-        <h3>징후 <span>Clinical Sign</span></h3>
+        <span class="tag micro en" lang="en">Sign ② — Clinical</span>
+        <h3>징후 <span class="en" lang="en">Clinical Sign</span></h3>
         <p>몸이 보내는 신호입니다. 환자가 증상(symptom)을 말로 전하기 어려울수록,
           간호사는 징후(sign)를 더 세심하게 관찰하고 읽어내야 합니다.</p>
       </div>
     </div>
-    <p class="name-close rv"><i>수어</i>로 묻고, <i>징후</i>를 읽는 간호.<br>그래서, MEDISIGN<em>.</em></p>
+    <p class="name-close rv"><em>수어</em>로 묻고, <em>징후</em>를 읽는 간호.<br>그래서, MEDISIGN<em>.</em></p>
   </div>
 </section>
 
@@ -479,10 +576,10 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <section id="about" aria-labelledby="about-t">
   <div class="container">
     <div class="sec-head">
-      <span class="micro">05 / About</span>
+      <span class="micro en" lang="en">05 / About</span>
       <span class="micro">우리는 누구</span>
     </div>
-    <h2 id="about-t" class="display rv"><i>간호대학생</i>이<br>합니다.</h2>
+    <h2 id="about-t" class="display rv"><em>간호대학생</em>이<br>합니다.</h2>
     <p class="lead rv" style="--d:.1s">
       메디사인은 기독간호대학교 학생들이 만든 봉사 동아리입니다.
       활력징후를 재고, 복약을 설명하고, 몸의 신호를 관찰하는 법을 배우는 사람들 —
@@ -515,9 +612,9 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
       </div>
     </div>
     <div class="flow rv" aria-hidden="true">
-      <span class="end micro">Signal<b>몸의 신호</b></span>
+      <span class="end micro en" lang="en">Signal<b>몸의 신호</b></span>
       <span class="flow-line"></span>
-      <span class="end micro" style="text-align:right">Right to Health<b>모두의 건강권</b></span>
+      <span class="end micro en" lang="en" style="text-align:right">Right to Health<b>모두의 건강권</b></span>
     </div>
   </div>
 </section>
@@ -526,17 +623,17 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <section id="archive" aria-labelledby="archive-t" style="padding-top:0">
   <div class="container">
     <div class="sec-head">
-      <span class="micro">06 / Archive</span>
+      <span class="micro en" lang="en">06 / Archive</span>
       <span class="micro">기록</span>
     </div>
-    <h2 id="archive-t" class="display rv"><i>기록</i>이<br>쌓이는 중입니다.</h2>
+    <h2 id="archive-t" class="display rv"><em>기록</em>이<br>쌓이는 중입니다.</h2>
     <p class="lead rv" style="--d:.1s">
       2026년에 시작한 신생 동아리에게 화려한 실적은 아직 없습니다.
       대신 지금부터의 기록을 약속합니다. 활동이 하나 끝날 때마다, 이 자리에 하나씩 채워집니다.
     </p>
     <div class="arc-list rv" style="--d:.15s;margin-top:3rem">
       <div class="arc-row">
-        <span class="arc-year">2026</span>
+        <span class="arc-year en" lang="en">2026</span>
         <div>
           <h3>메디사인 창립</h3>
           <p>첫 번째 프로젝트 ‘청각장애인의 의료 접근성’ 시작.</p>
@@ -544,42 +641,131 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
       </div>
       <!-- 활동이 끝나면 위 형식대로 한 줄씩 추가하세요 -->
       <div class="arc-row ghost">
-        <span class="arc-year">Next</span>
+        <span class="arc-year en" lang="en">Next</span>
         <div><h3>다음 기록을 준비하고 있습니다</h3></div>
       </div>
       <div class="arc-row ghost">
-        <span class="arc-year">And</span>
+        <span class="arc-year en" lang="en">And</span>
         <div><h3>이 줄은, 어쩌면 당신과 함께 채워질지도요</h3></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 07 CONTACT / 함께하기 ============ -->
-<section id="contact" class="dark" aria-labelledby="contact-t">
+<!-- ============ 07 GALLERY / 갤러리 ============ -->
+<section id="gallery" aria-labelledby="gallery-t" style="padding-top:0">
   <div class="container">
     <div class="sec-head">
-      <span class="micro">07 / Contact</span>
+      <span class="micro en" lang="en">07 / Gallery</span>
+      <span class="micro">활동 사진</span>
+    </div>
+    <h2 id="gallery-t" class="display rv">현장의 <em>장면</em>들.</h2>
+    <p class="lead rv" style="--d:.1s">
+      스터디, 제작, 봉사 — 활동하는 동안 남긴 사진입니다.
+      말로 설명하기 어려운 것들이 사진에는 담깁니다.
+    </p>
+
+    <!-- 사진 추가법: 아래 .empty 한 칸을 통째로 이 형태로 바꾸면 됩니다
+    <figure>
+      <div class="frame"><img src="assets/gallery/파일명.jpg" alt="사진 내용 설명"></div>
+      <figcaption>활동 이름<span class="when">2026.03</span></figcaption>
+    </figure>
+    ※ alt에는 '사진'이 아니라 '무엇이 보이는지'를 적어주세요. 접근성의 핵심입니다. -->
+
+    <div class="gal rv" style="--d:.15s;margin-top:3rem">
+      <figure>
+        <div class="frame empty">첫 활동 사진이<br>들어갈 자리</div>
+        <figcaption>의료 수어 스터디<span class="when">예정</span></figcaption>
+      </figure>
+      <figure>
+        <div class="frame empty">두 번째 사진이<br>들어갈 자리</div>
+        <figcaption>진료 소통 보드 제작<span class="when">예정</span></figcaption>
+      </figure>
+      <figure>
+        <div class="frame empty">세 번째 사진이<br>들어갈 자리</div>
+        <figcaption>복지관 건강교육<span class="when">예정</span></figcaption>
+      </figure>
+    </div>
+    <p class="gal-note rv">
+      사진을 올릴 때는 함께 찍힌 분들께 미리 동의를 구하고, 얼굴이 선명하게 드러나는 사진은
+      특히 조심합니다. 활동의 기록이 누군가에게 부담이 되지 않도록요.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 08 FAQ / 자주 묻는 질문 ============ -->
+<section id="faq" class="dark" aria-labelledby="faq-t">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro en" lang="en">08 / FAQ</span>
+      <span class="micro">자주 묻는 질문</span>
+    </div>
+    <h2 id="faq-t" class="display rv">망설이는<br><em>이유</em>들에 대해.</h2>
+    <p class="lead rv" style="--d:.1s">
+      가입을 고민할 때 가장 많이 나오는 질문들입니다.
+      여기 없는 게 궁금하시면 인스타그램으로 편하게 물어보세요.
+    </p>
+    <div class="faq rv" style="--d:.15s;margin-top:3rem">
+      <details>
+        <summary>수어를 전혀 몰라도 되나요? <span class="pm" aria-hidden="true">+</span></summary>
+        <p>네, 대부분 모르는 상태로 시작합니다. 수어를 이미 할 줄 아는 사람을 뽑는 동아리가 아니라,
+          같이 배우는 것 자체가 활동이에요. 의료 수어 스터디가 첫 번째 활동인 이유이기도 합니다.</p>
+      </details>
+      <details>
+        <summary>몇 학년까지 지원할 수 있나요? <span class="pm" aria-hidden="true">+</span></summary>
+        <p>학년 제한은 없습니다. 실습과 국가고시 일정이 있는 고학년도 참여할 수 있도록
+          활동 강도를 조절합니다. 오히려 임상 경험이 있는 선배의 시선이 콘텐츠 만들 때 큰 도움이 돼요.</p>
+      </details>
+      <details>
+        <summary>시간이 얼마나 드나요? <span class="pm" aria-hidden="true">+</span></summary>
+        <p>정기 스터디는 격주로 한 시간 남짓, 봉사와 캠페인은 학기당 몇 차례 진행합니다.
+          시험 기간에는 쉬어갑니다. 부담 없이 오래 하는 게 목표예요.</p>
+      </details>
+      <details>
+        <summary>봉사시간 인정이 되나요? <span class="pm" aria-hidden="true">+</span></summary>
+        <p>복지관·보건소 등 기관과 연계해 진행하는 봉사는 기관을 통해 봉사시간이 인정됩니다.
+          다만 교내 자체 활동은 해당되지 않을 수 있어, 활동마다 미리 안내합니다.</p>
+      </details>
+      <details>
+        <summary>회비가 있나요? <span class="pm" aria-hidden="true">+</span></summary>
+        <p>제작물 재료비 정도의 최소한만 걷습니다. 사용 내역은 부원 모두에게 공개하고,
+          교내 지원금이나 외부 공모전 지원금으로 충당할 수 있는 부분은 그렇게 하려고 합니다.</p>
+      </details>
+      <details>
+        <summary>청각장애인 관련 경험이 없어도 괜찮을까요? <span class="pm" aria-hidden="true">+</span></summary>
+        <p>괜찮습니다. 오히려 잘 모른다는 자각에서 출발하는 편이 낫습니다.
+          농문화를 배우는 시간을 활동에 포함하고 있고, 무엇보다 당사자분들의 이야기를
+          직접 듣는 걸 가장 중요하게 생각해요.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 CONTACT / 함께하기 ============ -->
+<section id="contact" class="dark" aria-labelledby="contact-t" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro en" lang="en">09 / Contact</span>
       <span class="micro">함께하기</span>
     </div>
-    <h2 id="contact-t" class="display rv">함께<br><i>신호</i>를 읽어요.</h2>
+    <h2 id="contact-t" class="display rv">함께<br><em>신호</em>를 읽어요.</h2>
     <div class="c-cards" style="margin-top:3rem">
       <!-- TODO: 동아리 이메일이 생기면 href를 mailto:주소 형태로 바꿔도 됩니다 (2곳) -->
       <a class="c-card rv" href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">
-        <span class="tag micro">For Students · Instagram DM <span class="arrow">↗</span></span>
+        <span class="tag micro en" lang="en">For Students · Instagram DM <span class="arrow">↗</span></span>
         <h3>가입 문의</h3>
         <p>간호대학 재학생이라면 학년 무관. 수어를 몰라도 괜찮습니다 —
           같이 배우는 것부터가 활동이니까요.</p>
       </a>
       <a class="c-card rv" style="--d:.12s" href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">
-        <span class="tag micro">For Partners · Instagram DM <span class="arrow">↗</span></span>
+        <span class="tag micro en" lang="en">For Partners · Instagram DM <span class="arrow">↗</span></span>
         <h3>기관 협력</h3>
         <p>복지관·병원·보건소·학교. 건강교육, 콘텐츠 제작, 캠페인을
           함께할 기관을 기다립니다.</p>
       </a>
     </div>
     <div class="direct rv" style="--d:.2s">
-      <span class="micro">or write directly</span>
+      <span class="micro en" lang="en">or write directly</span>
       <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">Instagram @medisign.2026</a>
       <!-- TODO: 이메일이 생기면 아래 한 줄의 주석을 풀고 주소를 채우세요
       <a href="mailto:이메일주소">이메일주소</a> -->
@@ -610,6 +796,47 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 (function(){
   document.documentElement.classList.add('js');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== 시작화면 — 첫 방문에만, 움직임 최소화 설정이면 건너뜀 ===== */
+  (function(){
+    var intro = document.getElementById('intro');
+    var seen = false;
+    try { seen = sessionStorage.getItem('ms-intro') === '1'; } catch(e){}
+    if(seen || reduced){ intro.remove(); return; }
+
+    intro.hidden = false;
+    document.body.classList.add('lock');
+    var count = intro.querySelector('.intro-count');
+    var bar = intro.querySelector('.intro-bar');
+    var closed = false;
+
+    function close(){
+      if(closed) return;
+      closed = true;
+      try { sessionStorage.setItem('ms-intro','1'); } catch(e){}
+      intro.classList.add('done');
+      document.body.classList.remove('lock');
+      setTimeout(function(){ intro.remove(); revealInView(); }, 950);
+    }
+
+    var t0 = null, dur = 1700;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts - t0)/dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      count.textContent = Math.round(e * 100);
+      bar.style.transform = 'scaleX(' + e + ')';
+      if(p < 1) requestAnimationFrame(step); else setTimeout(close, 260);
+    }
+    requestAnimationFrame(step);
+
+    document.getElementById('introSkip').addEventListener('click', close);
+    intro.addEventListener('click', close);
+    document.addEventListener('keydown', function onKey(e){
+      if(e.key === 'Escape' || e.key === 'Enter' || e.key === ' '){ close(); document.removeEventListener('keydown', onKey); }
+    });
+    setTimeout(close, 4000); /* 안전장치: 무슨 일이 있어도 4초 뒤 사라짐 */
+  })();
 
   /* 라이브 시계 (KST) */
   function tick(){
