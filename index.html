@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MEDISIGN — 간호대학 의료 접근성 봉사 동아리</title>
-<meta name="description" content="메디사인(MEDISIGN)은 의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는 간호대학생 봉사 동아리입니다. 2026년 첫 프로젝트는 청각장애인의 의료 접근성입니다.">
+<meta name="description" content="메디사인(MEDISIGN)은 의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는 기독간호대학교 학생 봉사 동아리입니다. 2026년 첫 프로젝트는 청각장애인의 의료 접근성입니다.">
 <meta property="og:title" content="MEDISIGN — 말이 닿지 않는 곳에서, 신호를 읽습니다">
 <meta property="og:description" content="의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는 간호대학생 봉사 동아리">
 <meta property="og:type" content="website">
@@ -233,8 +233,16 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   color:transparent;-webkit-text-stroke:1px rgba(246,246,244,.28);user-select:none;
   text-align:center;transform:translateY(.08em);overflow:hidden;
 }
+.foot-school{
+  border-top:1px solid var(--line-dark);margin-top:-.5rem;padding-top:1.5rem;
+  display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;
+}
+.foot-school .chip{background:var(--surface);display:inline-flex;padding:.45rem .8rem;border-radius:4px;transition:background .25s}
+.foot-school .chip:hover{background:#fff}
+.foot-school img{height:26px;width:auto;display:block}
+.foot-school span{font-size:.78rem;color:var(--on-dark-muted)}
 .foot-bar{
-  border-top:1px solid var(--line-dark);margin-top:-.5rem;padding-top:1.6rem;
+  border-top:1px solid var(--line-dark);margin-top:1.6rem;padding-top:1.6rem;
   display:flex;justify-content:space-between;gap:1.4rem;flex-wrap:wrap;align-items:baseline;
 }
 .foot-bar p{font-size:.78rem;color:var(--on-dark-muted);line-height:1.8;max-width:52ch}
@@ -306,7 +314,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   <div class="container" style="display:flex;flex-direction:column;flex:1;min-height:100%">
     <div class="sec-head">
       <span class="micro">01 / Signal</span>
-      <span class="micro">간호대학 봉사 동아리</span>
+      <span class="micro">기독간호대학교 봉사 동아리</span>
     </div>
     <h1 class="rv">말이 닿지 않는 곳에서,<br>몸의 <em>신호</em>를 읽습니다.</h1>
     <p class="lead rv" style="--d:.15s">
@@ -464,8 +472,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     </div>
     <h2 id="about-t" class="display rv">간호대학생이<br>합니다.</h2>
     <p class="lead rv" style="--d:.1s">
-      <!-- TODO: ○○대학교를 실제 학교명으로 바꿔주세요 -->
-      메디사인은 ○○대학교 간호대학 학생들이 만든 봉사 동아리입니다.
+      메디사인은 기독간호대학교 학생들이 만든 봉사 동아리입니다.
       활력징후를 재고, 복약을 설명하고, 몸의 신호를 관찰하는 법을 배우는 사람들 —
       그래서 우리의 봉사는 마음만이 아니라 <strong>전공으로 하는 봉사</strong>입니다.
     </p>
@@ -572,6 +579,12 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <footer class="dark">
   <div class="foot-mark" aria-hidden="true">MEDISIGN</div>
   <div class="container">
+    <div class="foot-school">
+      <a class="chip" href="https://www.ccn.ac.kr" target="_blank" rel="noopener">
+        <img src="assets/ccn-logo.png" alt="기독간호대학교 홈페이지" width="194" height="55">
+      </a>
+      <span>기독간호대학교 학생 동아리</span>
+    </div>
     <div class="foot-bar">
       <p>이 사이트는 모두가 읽을 수 있도록 만들었습니다 — 충분한 명도 대비, 키보드 탐색,
         움직임 줄이기 설정 지원(KWCAG 기반). 불편한 점을 알려주시면 바로 고치겠습니다.</p>

@@ -14,9 +14,8 @@
 
 `index.html` 안의 `TODO` 주석을 검색하면 바꿀 곳이 나옵니다.
 
-1. `○○대학교` → 실제 학교명 (05 About 섹션)
-2. `medisign.official@gmail.com` → 실제 동아리 이메일 (07 Contact 섹션, 3곳)
-3. `@medisign.official` → 실제 인스타그램 계정
+1. `medisign.official@gmail.com` → 실제 동아리 이메일 (07 Contact 섹션, 3곳)
+2. `@medisign.official` → 실제 인스타그램 계정
 
 활동이 하나 끝날 때마다 `06 Archive` 섹션의 형식대로 한 줄씩 추가하면 됩니다.
 
