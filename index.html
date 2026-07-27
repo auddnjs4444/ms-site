@@ -9,7 +9,7 @@
 <meta property="og:description" content="의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는 간호대학생 봉사 동아리">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#F2F1EB">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231D39F5'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%23F6F6F4' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23188144'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%23F6F6F4' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +23,9 @@
   --ink-soft:#3A3A36;
   --muted:#706E63;
   --line:rgba(18,18,16,.14);
-  --accent:#1D39F5;     /* 포인트 블루 (밝은 배경용) */
-  --accent-dark:#FFD0C2;/* 어두운 배경용 포인트 — 블루는 검정 위에서 안 읽혀서 따로 씁니다 */
+  --accent:#188144;     /* 학교 로고 초록 (기독간호대학교 엠블럼에서 추출) — 밝은 배경용 */
+  --accent-deep:#0F6B37;/* 같은 초록의 진한 버전 — 작은 글자용 (명도 대비 확보) */
+  --accent-dark:#7FD6A4;/* 어두운 배경용 밝은 초록 — 진초록은 검정 위에서 안 읽혀서 따로 씁니다 */
   --on-dark:#F6F6F4;
   --on-dark-soft:rgba(246,246,244,.78);
   --on-dark-muted:rgba(246,246,244,.55);
@@ -84,7 +85,7 @@ header{
   padding:1.1rem 4vw;
 }
 .wordmark{font-weight:700;letter-spacing:-.02em;font-size:1.02rem;text-decoration:none}
-.wordmark i,#menuBtn .br{font-family:inherit;font-style:normal;color:#E2C60A}/* difference 반전 시 파랑으로 보임 */
+.wordmark i,#menuBtn .br{font-family:inherit;font-style:normal;color:#DA70A7}/* difference 반전 시 학교 초록으로 보임 */
 .head-right{display:flex;align-items:center;gap:1.6rem}
 .head-clock{font-size:.72rem;font-weight:650;letter-spacing:.16em}
 #menuBtn{
@@ -132,6 +133,7 @@ section{padding-block:var(--pad-sec)}
   font-size:clamp(1.02rem,1.5vw,1.22rem);line-height:1.85;color:var(--ink-soft);
   max-width:46ch;margin-top:clamp(1.6rem,3vw,2.4rem);
 }
+.lead.lead-follow{margin-top:.95em}/* 이어지는 단락은 간격을 좁게 */
 .dark{background:var(--ink);color:var(--on-dark)}
 .dark .lead{color:var(--on-dark-soft)}
 
@@ -210,7 +212,7 @@ section{padding-block:var(--pad-sec)}
   display:grid;grid-template-columns:11rem 1fr;gap:2rem;
   padding:clamp(1.6rem,3vw,2.2rem) 0;border-top:1px solid var(--line);
 }
-.ab-tag{font-size:.72rem;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding-top:.5rem}
+.ab-tag{font-size:.72rem;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);padding-top:.5rem}
 .ab-row h3{font-size:clamp(1.2rem,2.2vw,1.65rem);letter-spacing:-.02em}
 .ab-row p{margin-top:.55rem;color:var(--muted);font-size:.95rem;line-height:1.75;max-width:58ch}
 .flow{display:flex;align-items:center;gap:1.4rem;margin-top:clamp(3rem,6vw,4.5rem)}
@@ -227,7 +229,7 @@ html:not(.js) .flow-line{transform:scaleX(1)}
   display:grid;grid-template-columns:7rem 1fr;gap:2rem;align-items:baseline;
   padding:1.7rem .2rem;border-top:1px solid var(--line);
 }
-.arc-year{font-size:.8rem;font-weight:600;letter-spacing:.1em;color:var(--accent)}
+.arc-year{font-size:.8rem;font-weight:600;letter-spacing:.1em;color:var(--accent-deep)}
 .arc-row h3{font-size:clamp(1.1rem,2vw,1.45rem);letter-spacing:-.015em}
 .arc-row p{margin-top:.4rem;color:var(--muted);font-size:.93rem}
 .arc-row.ghost{border-top-style:dashed;color:var(--muted)}
@@ -445,8 +447,10 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <h1 class="rv" lang="en">MEDI<span class="h-plus" aria-hidden="true">+</span><em class="en">SIGN</em></h1>
     <p class="lead rv" style="--d:.15s">
       메디사인(MEDISIGN)은 의료 현장에서 소통이 어려운 사람들의 건강권을 위해 활동하는
-      간호대학생 동아리입니다. 2026년, 우리의 첫 번째 프로젝트는
-      <strong>청각장애인의 의료 접근성</strong>입니다.
+      간호대학생 동아리입니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.25s">
+      2026년, 우리의 첫 번째 프로젝트는 <strong>청각장애인의 의료 접근성</strong>입니다.
     </p>
     <div class="cta-row rv" style="--d:.3s">
       <a class="cta" href="#contact"><span class="br">[</span> 함께하기 <span class="br">]</span></a>
@@ -472,9 +476,11 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     </h2>
     <p class="lead rv" style="--d:.1s">
       청각장애인 환자에게 진료실은 벽이 많은 곳입니다. 필담은 느리고 서로 놓치는 말이 많으며,
-      마스크는 입모양을 가립니다. 수어통역은 미리 예약해야 해서 갑작스러운 진료와 응급실에는
-      닿지 못할 때가 많습니다. 보호자가 대신 말하는 동안, 정작 환자 본인은
-      자신의 몸에 대한 대화에서 밀려납니다.
+      마스크는 입모양을 가립니다. 수어통역은 미리 예약해야 해서 갑작스러운 진료와
+      응급실에는 닿지 못할 때가 많습니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.2s">
+      보호자가 대신 말하는 동안, 정작 환자 본인은 자신의 몸에 대한 대화에서 밀려납니다.
     </p>
     <div class="stats">
       <div class="stat rv">
@@ -511,6 +517,8 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <h2 id="work-t" class="display rv">말이 아니어도,<br>전할 <em>방법</em>을 만듭니다.</h2>
     <p class="lead rv" style="--d:.1s">
       거창한 구호 대신, 진료실에서 실제로 쓰이는 것들을 만듭니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.2s">
       올해 메디사인이 하는 다섯 가지 활동입니다.
     </p>
     <ul class="work-list rv" style="--d:.15s;margin-top:3rem">
@@ -599,6 +607,8 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <h2 id="about-t" class="display rv"><em>간호대학생</em>이<br>합니다.</h2>
     <p class="lead rv" style="--d:.1s">
       메디사인은 기독간호대학교 학생들이 만든 봉사 동아리입니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.2s">
       미래의 간호사로서, <strong>간호의 마음과 전공적 지식</strong>으로 봉사에 임합니다.
     </p>
     <div class="ab-rows rv" style="--d:.15s;margin-top:3rem">
@@ -645,6 +655,8 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <h2 id="archive-t" class="display rv"><em>기록</em>이<br>쌓이는 중입니다.</h2>
     <p class="lead rv" style="--d:.1s">
       2026년에 시작한 신생 동아리에게 화려한 실적은 아직 없습니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.2s">
       대신 지금부터의 기록을 약속합니다. 활동이 하나 끝날 때마다, 이 자리에 하나씩 채워집니다.
     </p>
     <div class="arc-list rv" style="--d:.15s;margin-top:3rem">
@@ -678,6 +690,8 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <h2 id="gallery-t" class="display rv">현장의 <em>장면</em>들.</h2>
     <p class="lead rv" style="--d:.1s">
       스터디, 제작, 봉사 — 활동하는 동안 남긴 사진입니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.2s">
       말로 설명하기 어려운 것들이 사진에는 담깁니다.
     </p>
 
@@ -719,6 +733,8 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <h2 id="faq-t" class="display rv">망설이는<br><em>이유</em>들에 대해.</h2>
     <p class="lead rv" style="--d:.1s">
       가입을 고민할 때 가장 많이 나오는 질문들입니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.2s">
       여기 없는 게 궁금하시면 인스타그램으로 편하게 물어보세요.
     </p>
     <div class="faq rv" style="--d:.15s;margin-top:3rem">
