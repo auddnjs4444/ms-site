@@ -293,6 +293,16 @@ html:not(.js) .flow-line{transform:scaleX(1)}
 .c-card p{margin-top:1rem;color:var(--on-dark-soft);font-size:.96rem;line-height:1.75}
 .direct{margin-top:3.2rem;display:flex;gap:.6rem 2.2rem;flex-wrap:wrap;align-items:baseline}
 .direct a{font-weight:600;text-decoration-color:var(--accent-dark);text-underline-offset:6px}
+/* 사실 정보 한 줄 (About 상단) */
+.facts{margin-top:1.5rem;font-size:.88rem;font-weight:600;letter-spacing:.005em;color:var(--muted)}
+/* 연락 카드 슬롯 — 카드 아래에 보조 링크를 둘 수 있게 */
+.c-slot{display:flex;flex-direction:column}
+.c-slot .c-card{flex:1}
+.c-alt{margin-top:.75rem;font-size:.82rem;color:var(--on-dark-muted);text-underline-offset:5px;text-decoration-color:var(--line-dark)}
+.c-alt:hover{color:var(--accent-dark);text-decoration-color:var(--accent-dark)}
+/* 함께하기 안의 FAQ 하위 블록 */
+.faq-block{margin-top:clamp(4rem,8vw,6rem);border-top:1px solid var(--line-dark);padding-top:clamp(2.2rem,4.5vw,3.2rem)}
+.faq-title{font-size:clamp(1.3rem,2.6vw,1.9rem);letter-spacing:-.025em}
 .direct a:hover{color:var(--accent-dark)}
 
 /* ============ 푸터 ============ */
@@ -416,19 +426,15 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <nav aria-label="섹션 메뉴">
       <ul>
         <li><a href="#problem" style="--d:.04s"><span class="n" lang="en">02</span>문제의식</a></li>
-        <li><a href="#work" style="--d:.08s"><span class="n" lang="en">03</span>하는 일</a></li>
-        <li><a href="#name" style="--d:.12s"><span class="n" lang="en">04</span>이름의 의미</a></li>
-        <li><a href="#about" style="--d:.16s"><span class="n" lang="en">05</span>우리는 누구</a></li>
-        <li><a href="#archive" style="--d:.2s"><span class="n" lang="en">06</span>아카이브</a></li>
-        <li><a href="#gallery" style="--d:.24s"><span class="n" lang="en">07</span>갤러리</a></li>
-        <li><a href="#faq" style="--d:.28s"><span class="n" lang="en">08</span>자주 묻는 질문</a></li>
-        <li><a href="#contact" style="--d:.32s"><span class="n" lang="en">09</span>함께하기</a></li>
+        <li><a href="#work" style="--d:.1s"><span class="n" lang="en">03</span>하는 일</a></li>
+        <li><a href="#about" style="--d:.16s"><span class="n" lang="en">04</span>우리는 누구</a></li>
+        <li><a href="#activity" style="--d:.22s"><span class="n" lang="en">05</span>활동 기록</a></li>
+        <li><a href="#contact" style="--d:.28s"><span class="n" lang="en">06</span>함께하기</a></li>
       </ul>
     </nav>
     <div class="menu-meta micro">
       <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">Instagram — @medisign.2026</a>
-      <!-- TODO: 이메일이 생기면 아래 주석을 풀고 주소를 채우세요
-      <a href="mailto:이메일주소">이메일주소</a> -->
+      <a href="mailto:medisign26@gmail.com">medisign26@gmail.com</a>
       <span class="en" lang="en">EST. 2026</span>
       <span data-clock>--:-- KST</span>
     </div>
@@ -568,45 +574,26 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   </div>
 </section>
 
-<!-- ============ 04 NAME / 이름의 의미 ============ -->
-<section id="name" aria-labelledby="name-t" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="micro en" lang="en">04 / Name</span>
-      <span class="micro">MEDI × SIGN</span>
-    </div>
-    <h2 id="name-t" class="display rv"><em class="en" lang="en">SIGN</em>은<br>두 번 읽힙니다.</h2>
-    <div class="twin" style="margin-top:3rem">
-      <div class="twin-card rv">
-        <span class="tag micro en" lang="en">Sign ① — Language</span>
-        <h3>수어 <span class="en" lang="en">Sign Language</span></h3>
-        <p>청각장애인의 언어입니다.<br> 우리는 환자의 언어로 인사하고, 묻고,
-          설명하는 법을 배웁니다.<br> 통역을 기다리게 하는 대신, 먼저 다가가기 위해서요.</p>
-      </div>
-      <div class="twin-card rv" style="--d:.12s">
-        <span class="tag micro en" lang="en">Sign ② — Clinical</span>
-        <h3>징후 <span class="en" lang="en">Clinical Sign</span></h3>
-        <p>몸이 보내는 신호입니다.<br> 환자가 증상(symptom)을 말로 전하기 어려울수록,
-          간호사는 징후(sign)를 더 세심하게 관찰하고 읽어내야 합니다.</p>
-      </div>
-    </div>
-    <p class="name-close rv"><em>수어</em>로 묻고, <em>징후</em>를 읽는 간호.<br>그래서, MEDISIGN<em>.</em></p>
-  </div>
-</section>
-
-<!-- ============ 05 ABOUT / 우리는 누구 ============ -->
+<!-- ============ 04 ABOUT / 우리는 누구 ============ -->
 <section id="about" aria-labelledby="about-t">
   <div class="container">
     <div class="sec-head">
-      <span class="micro en" lang="en">05 / About</span>
+      <span class="micro en" lang="en">04 / About</span>
       <span class="micro">우리는 누구</span>
     </div>
     <h2 id="about-t" class="display rv"><em>간호대학생</em>이<br>합니다.</h2>
+    <p class="facts rv" style="--d:.06s">2026년 창립 · 임원진 6명, 회원 40명 · 기독간호대학교 학생 동아리</p>
+    <!-- 지도교수가 정해지면 위 줄 끝에 " · 지도교수 ○○○" 를 덧붙이세요 -->
     <p class="lead rv" style="--d:.1s">
       메디사인은 기독간호대학교 학생들이 만든 봉사 동아리입니다.
     </p>
     <p class="lead lead-follow rv" style="--d:.2s">
       미래의 간호사로서, <strong>전공 지식을 살려 따뜻한 돌봄</strong>을 실천합니다.
+    </p>
+    <p class="lead lead-follow rv" style="--d:.26s">
+      이름의 <em class="en" lang="en">SIGN</em>은 두 가지를 뜻합니다.<br>
+      하나는 청각장애인의 언어인 수어, 다른 하나는 몸이 보내는 징후입니다.<br>
+      수어로 묻고 징후를 읽는 간호 — 그래서 MEDISIGN입니다.
     </p>
     <div class="ab-rows rv" style="--d:.15s;margin-top:3rem">
       <div class="ab-row">
@@ -642,149 +629,130 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   </div>
 </section>
 
-<!-- ============ 06 ARCHIVE / 아카이브 ============ -->
-<section id="archive" aria-labelledby="archive-t" style="padding-top:0">
+<!-- ============ 05 ACTIVITY / 활동 기록 ============ -->
+<section id="activity" aria-labelledby="activity-t" style="padding-top:0">
   <div class="container">
     <div class="sec-head">
-      <span class="micro en" lang="en">06 / Archive</span>
-      <span class="micro">기록</span>
+      <span class="micro en" lang="en">05 / Activity</span>
+      <span class="micro">활동 기록</span>
     </div>
-    <h2 id="archive-t" class="display rv"><em>아카이브</em></h2>
+    <h2 id="activity-t" class="display rv">지금 <em>하고 있는</em> 일.</h2>
+    <p class="lead rv" style="--d:.1s">
+      2026년에 시작해, 이렇게 움직이고 있습니다.
+    </p>
     <div class="arc-list rv" style="--d:.15s;margin-top:3rem">
       <div class="arc-row">
         <span class="arc-year en" lang="en">2026</span>
         <div>
           <h3>메디사인 창립</h3>
-          <p>첫 번째 프로젝트 ‘청각장애인의 의료 접근성’ 시작.</p>
+          <p>첫 프로젝트 ‘청각장애인의 의료 접근성’을 시작했습니다.</p>
         </div>
       </div>
-      <!-- 활동이 끝나면 위 형식대로 한 줄씩 추가하세요 -->
-      <div class="arc-row ghost">
-        <span class="arc-year en" lang="en">Next</span>
-        <div><h3>다음 기록을 준비하고 있습니다</h3></div>
+      <div class="arc-row">
+        <span class="arc-year">진행 중</span>
+        <div>
+          <h3>의료 수어 스터디 격주 진행 중</h3>
+          <p>진료 상황에서 쓰는 기초 수어를 정기 모임으로 함께 익히고 있습니다.</p>
+        </div>
       </div>
-      <div class="arc-row ghost">
-        <span class="arc-year en" lang="en">And</span>
-        <div><h3>이 줄은, 어쩌면 당신과 함께 채워질지도요</h3></div>
+      <div class="arc-row">
+        <span class="arc-year">제작 중</span>
+        <div>
+          <h3>진료 소통 보드 시제품 제작 중</h3>
+          <p>진료실에서 짚어 가며 쓰는 소통 보드를 만들고 있습니다.</p>
+        </div>
       </div>
+      <div class="arc-row">
+        <span class="arc-year">준비 중</span>
+        <div>
+          <h3>첫 기관 연계 준비 중</h3>
+          <p>복지관·보건소와 함께할 건강교육을 협의하고 있습니다.</p>
+        </div>
+      </div>
+      <!-- 활동이 늘어나면 위 형식대로 한 줄씩 추가하세요 -->
     </div>
-  </div>
-</section>
 
-<!-- ============ 07 GALLERY / 갤러리 ============ -->
-<section id="gallery" aria-labelledby="gallery-t" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="micro en" lang="en">07 / Gallery</span>
-      <span class="micro">활동 사진</span>
+    <!-- 활동 사진이 생기면 아래 주석을 풀고 figure를 채우세요.
+         사진이 없는 동안에는 빈 자리를 만들지 않습니다.
+    <div class="gal rv" style="--d:.2s;margin-top:3rem">
+      <figure>
+        <div class="frame"><img src="assets/gallery/파일명.jpg" alt="사진에 무엇이 보이는지 설명"></div>
+        <figcaption>활동 이름<span class="when">2026.03</span></figcaption>
+      </figure>
     </div>
-    <h2 id="gallery-t" class="display rv">메디사인의 <em>순간</em>들.</h2>
-    <p class="lead rv" style="--d:.1s">
-      스터디, 회의, 봉사 — 활동하는 순간을 남긴 사진입니다.
-    </p>
-
-    <!-- 사진 추가법: 아래 .empty 한 칸을 통째로 이 형태로 바꾸면 됩니다
-    <figure>
-      <div class="frame"><img src="assets/gallery/파일명.jpg" alt="사진 내용 설명"></div>
-      <figcaption>활동 이름<span class="when">2026.03</span></figcaption>
-    </figure>
     ※ alt에는 '사진'이 아니라 '무엇이 보이는지'를 적어주세요. 접근성의 핵심입니다. -->
-
-    <div class="gal rv" style="--d:.15s;margin-top:3rem">
-      <figure>
-        <div class="frame empty">첫 활동 사진이<br>들어갈 자리</div>
-        <figcaption>의료 수어 스터디<span class="when">예정</span></figcaption>
-      </figure>
-      <figure>
-        <div class="frame empty">두 번째 사진이<br>들어갈 자리</div>
-        <figcaption>진료 소통 보드 제작<span class="when">예정</span></figcaption>
-      </figure>
-      <figure>
-        <div class="frame empty">세 번째 사진이<br>들어갈 자리</div>
-        <figcaption>복지관 건강교육<span class="when">예정</span></figcaption>
-      </figure>
-    </div>
   </div>
 </section>
 
-<!-- ============ 08 FAQ / 자주 묻는 질문 ============ -->
-<section id="faq" class="dark" aria-labelledby="faq-t">
+<!-- ============ 06 CONTACT / 함께하기 (FAQ 포함) ============ -->
+<section id="contact" class="dark" aria-labelledby="contact-t">
   <div class="container">
     <div class="sec-head">
-      <span class="micro en" lang="en">08 / FAQ</span>
-      <span class="micro">자주 묻는 질문</span>
-    </div>
-    <h2 id="faq-t" class="display rv">망설이는<br><em>이유</em>들에 대해.</h2>
-    <p class="lead rv" style="--d:.1s">
-      가입을 고민할 때 가장 많이 나오는 질문들입니다.
-    </p>
-    <p class="lead lead-follow rv" style="--d:.2s">
-      여기 없는 게 궁금하시면 인스타그램으로 편하게 물어보세요.
-    </p>
-    <div class="faq rv" style="--d:.15s;margin-top:3rem">
-      <details>
-        <summary>수어를 전혀 몰라도 되나요? <span class="pm" aria-hidden="true">+</span></summary>
-        <p>네, 대부분 모르는 상태로 시작합니다.<br> 수어를 이미 할 줄 아는 사람을 뽑는 동아리가 아니라,
-          같이 배우는 것 자체가 활동이에요.<br> 의료 수어 스터디가 첫 번째 활동인 이유이기도 합니다.</p>
-      </details>
-      <details>
-        <summary>몇 학년까지 지원할 수 있나요? <span class="pm" aria-hidden="true">+</span></summary>
-        <p>학년 제한은 없습니다.<br> 실습과 국가고시 일정이 있는 고학년도 참여할 수 있도록
-          활동 강도를 조절합니다.<br> 오히려 임상 경험이 있는 선배의 시선이 콘텐츠 만들 때 큰 도움이 돼요.</p>
-      </details>
-      <details>
-        <summary>시간이 얼마나 드나요? <span class="pm" aria-hidden="true">+</span></summary>
-        <p>정기 스터디는 격주로 한 시간 남짓, 봉사와 캠페인은 학기당 몇 차례 진행합니다.<br>
-          시험 기간에는 쉬어갑니다.<br> 부담 없이 오래 하는 게 목표예요.</p>
-      </details>
-      <details>
-        <summary>봉사시간 인정이 되나요? <span class="pm" aria-hidden="true">+</span></summary>
-        <p>복지관·보건소 등 기관과 연계해 진행하는 봉사는 기관을 통해 봉사시간이 인정됩니다.<br>
-          다만 교내 자체 활동은 해당되지 않을 수 있어, 활동마다 미리 안내합니다.</p>
-      </details>
-      <details>
-        <summary>회비가 있나요? <span class="pm" aria-hidden="true">+</span></summary>
-        <p>정기 회비는 없습니다.<br> 활동에 따라 소소한 개인 지출이 생길 수 있고,
-          이런 경우엔 미리 안내합니다.</p>
-      </details>
-      <details>
-        <summary>청각장애인 관련 경험이 없어도 괜찮을까요? <span class="pm" aria-hidden="true">+</span></summary>
-        <p>괜찮습니다.<br> 오히려 잘 모른다는 자각에서 출발하는 편이 낫습니다.<br>
-          농문화를 배우는 시간을 활동에 포함하고 있고, 무엇보다 당사자분들의 이야기를
-          직접 듣는 걸 가장 중요하게 생각해요.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 09 CONTACT / 함께하기 ============ -->
-<section id="contact" class="dark" aria-labelledby="contact-t" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="micro en" lang="en">09 / Contact</span>
+      <span class="micro en" lang="en">06 / Contact</span>
       <span class="micro">함께하기</span>
     </div>
     <h2 id="contact-t" class="display rv">함께<br><em>신호</em>를 읽어요.</h2>
     <div class="c-cards" style="margin-top:3rem">
-      <!-- TODO: 동아리 이메일이 생기면 href를 mailto:주소 형태로 바꿔도 됩니다 (2곳) -->
-      <a class="c-card rv" href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">
-        <span class="tag micro en" lang="en">For Students · Instagram DM <span class="arrow">↗</span></span>
-        <h3>가입 문의</h3>
-        <p>간호대학 재학생이라면 학년 무관.<br> 수어를 몰라도 괜찮습니다 —
-          같이 배우는 것부터가 활동이니까요.</p>
-      </a>
-      <a class="c-card rv" style="--d:.12s" href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">
-        <span class="tag micro en" lang="en">For Partners · Instagram DM <span class="arrow">↗</span></span>
-        <h3>기관 협력</h3>
-        <p>복지관·병원·보건소·학교.<br> 건강교육, 콘텐츠 제작, 캠페인을
-          함께할 기관을 기다립니다.</p>
-      </a>
+      <div class="c-slot rv">
+        <a class="c-card" href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">
+          <span class="tag micro en" lang="en">For Students · Instagram DM <span class="arrow">↗</span></span>
+          <h3>가입 문의</h3>
+          <p>간호대학 재학생이라면 학년 무관.<br> 수어를 몰라도 괜찮습니다 —
+            같이 배우는 것부터가 활동이니까요.</p>
+        </a>
+      </div>
+      <div class="c-slot rv" style="--d:.12s">
+        <a class="c-card" href="mailto:medisign26@gmail.com">
+          <span class="tag micro en" lang="en">For Partners · Email <span class="arrow">↗</span></span>
+          <h3>기관 협력</h3>
+          <p>복지관·병원·보건소·학교.<br> 건강교육, 콘텐츠 제작, 캠페인을
+            함께할 기관을 기다립니다.</p>
+        </a>
+        <a class="c-alt" href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">인스타그램 DM으로도 연락하실 수 있습니다 ↗</a>
+      </div>
     </div>
     <div class="direct rv" style="--d:.2s">
       <span class="micro en" lang="en">or write directly</span>
+      <a href="mailto:medisign26@gmail.com">medisign26@gmail.com</a>
       <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">Instagram @medisign.2026</a>
-      <!-- TODO: 이메일이 생기면 아래 한 줄의 주석을 풀고 주소를 채우세요
-      <a href="mailto:이메일주소">이메일주소</a> -->
+    </div>
+
+    <div class="faq-block rv" style="--d:.26s">
+      <h3 id="faq-t" class="faq-title">가입 전 자주 묻는 질문</h3>
+      <p class="micro" style="margin-top:.7rem">여기 없는 게 궁금하시면 위 연락처로 편하게 물어보세요.</p>
+      <div class="faq" style="margin-top:1.6rem">
+        <details>
+          <summary>수어를 전혀 몰라도 되나요? <span class="pm" aria-hidden="true">+</span></summary>
+          <p>네, 대부분 모르는 상태로 시작합니다.<br> 수어를 이미 할 줄 아는 사람을 뽑는 동아리가 아니라,
+            같이 배우는 것 자체가 활동이에요.<br> 의료 수어 스터디가 첫 번째 활동인 이유이기도 합니다.</p>
+        </details>
+        <details>
+          <summary>몇 학년까지 지원할 수 있나요? <span class="pm" aria-hidden="true">+</span></summary>
+          <p>학년 제한은 없습니다.<br> 실습과 국가고시 일정이 있는 고학년도 참여할 수 있도록
+            활동 강도를 조절합니다.<br> 오히려 임상 경험이 있는 선배의 시선이 콘텐츠 만들 때 큰 도움이 돼요.</p>
+        </details>
+        <details>
+          <summary>시간이 얼마나 드나요? <span class="pm" aria-hidden="true">+</span></summary>
+          <p>정기 스터디는 격주로 한 시간 남짓, 봉사와 캠페인은 학기당 몇 차례 진행합니다.<br>
+            시험 기간에는 쉬어갑니다.<br> 부담 없이 오래 하는 게 목표예요.</p>
+        </details>
+        <details>
+          <summary>봉사시간 인정이 되나요? <span class="pm" aria-hidden="true">+</span></summary>
+          <p>복지관·보건소 등 기관과 연계해 진행하는 봉사는 기관을 통해 봉사시간이 인정됩니다.<br>
+            다만 교내 자체 활동은 해당되지 않을 수 있어, 활동마다 미리 안내합니다.</p>
+        </details>
+        <details>
+          <summary>회비가 있나요? <span class="pm" aria-hidden="true">+</span></summary>
+          <p>정기 회비는 없습니다.<br> 활동에 따라 소소한 개인 지출이 생길 수 있고,
+            이런 경우엔 미리 안내합니다.</p>
+        </details>
+        <details>
+          <summary>청각장애인 관련 경험이 없어도 괜찮을까요? <span class="pm" aria-hidden="true">+</span></summary>
+          <p>괜찮습니다.<br> 오히려 잘 모른다는 자각에서 출발하는 편이 낫습니다.<br>
+            농문화를 배우는 시간을 활동에 포함하고 있고, 무엇보다 당사자분들의 이야기를
+            직접 듣는 걸 가장 중요하게 생각해요.</p>
+        </details>
+      </div>
     </div>
   </div>
 </section>
@@ -802,6 +770,8 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <div class="foot-bar">
       <p>이 사이트는 모두가 읽을 수 있도록 만들었습니다 — 충분한 명도 대비, 키보드 탐색,
         움직임 줄이기 설정 지원(KWCAG 기반).<br> 불편한 점을 알려주시면 바로 고치겠습니다.</p>
+      <p class="foot-contact"><a href="mailto:medisign26@gmail.com">medisign26@gmail.com</a>
+        · <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">Instagram @medisign.2026</a></p>
       <p>© <span data-year>2026</span> MEDISIGN · NURSING VOLUNTEER CLUB</p>
       <a class="top" href="#hero">맨 위로 ↑</a>
     </div>
@@ -967,7 +937,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
         en.target.classList.toggle('active', en.isIntersecting);
       });
     }, {rootMargin:'-38% 0px -38% 0px'});
-    document.querySelectorAll('.work-row, .c-card, .gal figure').forEach(function(el){ tio.observe(el); });
+    document.querySelectorAll('.work-row, .c-card').forEach(function(el){ tio.observe(el); });
   }
 })();
 </script>
