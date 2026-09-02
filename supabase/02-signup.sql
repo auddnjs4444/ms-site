@@ -21,6 +21,7 @@ begin
     end if;
   else
     if (new.role is distinct from old.role or new.status is distinct from old.status)
+       and auth.uid() is not null
        and not public.is_officer() then
       raise exception '권한 변경은 임원만 할 수 있습니다.';
     end if;
