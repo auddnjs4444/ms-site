@@ -85,6 +85,7 @@ form{margin-top:2rem}
 footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
   font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .banner.alert{border-color:var(--danger);background:#FDF3F2;color:#8A2018}
+.banner.alert.ok{border-color:var(--accent);background:#EDF6F0;color:var(--accent-deep)}
 .me{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
   border:1px solid var(--line);background:var(--surface);padding:1.2rem 1.3rem}
 .me strong{font-size:1.05rem;letter-spacing:-.01em}
@@ -223,6 +224,28 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
       <a class="back" href="#" data-go="login">← 로그인 화면으로</a>
     </div>
 
+    <!-- ============ 비밀번호 재설정 ============ -->
+    <form id="view-reset" novalidate hidden>
+      <div class="done" style="margin-bottom:1.8rem">
+        <h2>새 비밀번호를 정해 주세요.</h2>
+        <p>이 화면은 메일로 받은 링크를 눌러 들어오셨을 때만 열립니다.<br>
+          새 비밀번호를 저장하면 다시 로그인하시면 됩니다.</p>
+      </div>
+      <div class="field">
+        <label for="rs-pw">새 비밀번호
+          <span class="hint">8자 이상, 영문과 숫자를 모두 포함해 주세요.</span>
+        </label>
+        <input id="rs-pw" name="password" type="password" autocomplete="new-password" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <div class="field">
+        <label for="rs-pw2">새 비밀번호 확인</label>
+        <input id="rs-pw2" name="password2" type="password" autocomplete="new-password" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <button class="btn" type="submit">비밀번호 바꾸기</button>
+    </form>
+
     <!-- ============ 로그인 완료 (부원 홈) ============ -->
     <div id="view-member" hidden>
       <div class="me">
@@ -281,7 +304,7 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
   var $ = function(id){ return document.getElementById(id); };
   var tabs   = {login:$('tab-login'), join:$('tab-join')};
   var panels = {login:$('panel-login'), join:$('panel-join')};
-  var views  = ['pending','view-checkemail','view-rejected','view-member'];
+  var views  = ['pending','view-checkemail','view-rejected','view-member','view-reset'];
   var alertBox = $('alert');
 
   function hideAll(){
@@ -298,9 +321,10 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
     });
   }
   function showView(id){ hideAll(); $(id).hidden = false; }
-  function say(msg){
+  function say(msg, ok){
     if(!msg){ alertBox.hidden = true; return; }
     alertBox.textContent = msg; alertBox.hidden = false;
+    alertBox.classList.toggle('ok', !!ok);
     alertBox.scrollIntoView({block:'nearest'});
   }
 
@@ -363,11 +387,78 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
     if(m.indexOf('rate limit') > -1 ||
        m.indexOf('too many') > -1)                  return '시도가 너무 잦습니다. 잠시 뒤에 다시 해주세요.';
     if(m.indexOf('failed to fetch') > -1)           return '연결에 실패했습니다. 인터넷 상태를 확인해 주세요.';
+    if(m.indexOf('expired') > -1 || m.indexOf('invalid') > -1 && m.indexOf('token') > -1)
+      return '링크의 유효 시간이 지났습니다. 재설정을 다시 요청해 주세요.';
+    if(m.indexOf('should be different') > -1 || m.indexOf('same as the old') > -1)
+      return '지금 쓰고 계신 비밀번호와 다른 것으로 정해 주세요.';
     return (err && err.message) ? err.message : '알 수 없는 오류가 생겼습니다.';
   }
 
+  /* ===== 비밀번호 재설정 =====
+     메일 링크로 들어오면 임시 로그인 상태가 만들어집니다.
+     그대로 두면 '로그인 완료' 화면으로 넘어가 버리므로 먼저 가로챕니다. */
+  var inRecovery = false;
+
+  function linkParams(){
+    var out = {};
+    [location.hash.replace(/^#/,''), location.search.replace(/^\?/,'')].forEach(function(s){
+      s.split('&').forEach(function(kv){
+        if(!kv) return;
+        var i = kv.indexOf('=');
+        var k = decodeURIComponent(i<0 ? kv : kv.slice(0,i));
+        var v = i<0 ? '' : decodeURIComponent(kv.slice(i+1).replace(/\+/g,' '));
+        out[k] = v;
+      });
+    });
+    return out;
+  }
+  function cleanUrl(){
+    history.replaceState(null, '', location.pathname);
+  }
+
+  var lp = linkParams();
+  if(lp.error || lp.error_code){
+    /* 링크가 만료됐거나 이미 쓴 경우 */
+    var d = (lp.error_description || '').toLowerCase();
+    say(d.indexOf('expired') > -1 || (lp.error_code||'').indexOf('expired') > -1
+      ? '재설정 링크의 유효 시간이 지났습니다. 아래에서 다시 요청해 주세요.'
+      : '재설정 링크를 사용할 수 없습니다. 아래에서 다시 요청해 주세요.');
+    cleanUrl();
+  } else if(lp.type === 'recovery'){
+    inRecovery = true;
+  }
+
+  sb.auth.onAuthStateChange(function(event){
+    if(event === 'PASSWORD_RECOVERY'){ inRecovery = true; showView('view-reset'); cleanUrl(); }
+  });
+
+  $('view-reset').addEventListener('submit', function(e){
+    e.preventDefault(); say('');
+    var p1 = $('rs-pw'), p2 = $('rs-pw2');
+    var ok = setErr(p1, RULES.password(p1.value));
+    ok = setErr(p2, p2.value ? (p1.value === p2.value ? '' : '비밀번호가 서로 다릅니다.')
+                             : '비밀번호를 한 번 더 입력해 주세요.') && ok;
+    if(!ok){ (this.querySelector('[aria-invalid="true"]')||p1).focus(); return; }
+
+    var btn = this.querySelector('.btn'); btn.disabled = true; btn.textContent = '바꾸는 중…';
+    sb.auth.updateUser({ password: p1.value }).then(function(r){
+      btn.disabled = false; btn.textContent = '비밀번호 바꾸기';
+      if(r.error){ say(ko(r.error)); return; }
+      p1.value = ''; p2.value = '';
+      inRecovery = false;
+      /* 링크로 만들어진 임시 로그인을 정리하고, 새 비밀번호로 다시 들어오게 합니다 */
+      sb.auth.signOut().then(function(){
+        showAuth('login');
+        say('비밀번호가 바뀌었습니다. 새 비밀번호로 로그인해 주세요.', true);
+      });
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = '비밀번호 바꾸기'; say(ko(err));
+    });
+  });
+
   /* ===== 로그인 이후 상태에 따라 화면 나누기 ===== */
   function route(){
+    if(inRecovery){ showView('view-reset'); return Promise.resolve(); }
     return sb.auth.getSession().then(function(res){
       var session = res.data.session;
       if(!session){ showAuth('login'); return; }
@@ -477,8 +568,15 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
       setErr($('li-email'), '재설정 메일을 받을 이메일을 먼저 입력해 주세요.');
       $('li-email').focus(); return;
     }
+    var link = $('forgot'); link.textContent = '보내는 중…';
     sb.auth.resetPasswordForEmail(em, { redirectTo: location.origin + location.pathname })
-      .then(function(){ say('재설정 메일을 보냈습니다. 메일함을 확인해 주세요.'); });
+      .then(function(r){
+        link.textContent = '비밀번호를 잊으셨나요?';
+        if(r && r.error){ say(ko(r.error)); return; }
+        /* 가입된 주소인지 알려주지 않습니다 — 알려주면 가입 여부를 캐낼 수 있습니다 */
+        say('재설정 메일을 보냈습니다. 메일함을 확인해 주세요. (스팸함도 확인해 주세요)', true);
+      })
+      .catch(function(err){ link.textContent = '비밀번호를 잊으셨나요?'; say(ko(err)); });
   });
 
   /* ===== 로그아웃 ===== */
