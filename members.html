@@ -84,6 +84,30 @@ form{margin-top:2rem}
 
 footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
   font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.banner.alert{border-color:var(--danger);background:#FDF3F2;color:#8A2018}
+.me{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
+  border:1px solid var(--line);background:var(--surface);padding:1.2rem 1.3rem}
+.me strong{font-size:1.05rem;letter-spacing:-.01em}
+.me .me-sub{margin-top:.3rem;font-size:.85rem;color:var(--muted)}
+.badge{display:inline-block;margin-left:.5rem;font-size:.7rem;font-weight:700;letter-spacing:.06em;
+  padding:.18rem .5rem;border:1px solid var(--accent);color:var(--accent-deep);vertical-align:.1em}
+.linkbtn{background:none;border:0;font-family:inherit;font-size:.85rem;font-weight:650;
+  color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:.2rem}
+.linkbtn:hover{color:var(--accent-deep)}
+.sec-title{font-size:1.08rem;font-weight:650;letter-spacing:-.02em;
+  border-top:1px solid var(--line);padding-top:1.4rem}
+.sec-sub{margin-top:.4rem;font-size:.85rem;color:var(--muted)}
+.plist{list-style:none;margin-top:1rem}
+.plist li{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  border-top:1px solid var(--line);padding:.95rem .2rem}
+.plist .who{font-size:.93rem}
+.plist .who span{display:block;font-size:.79rem;color:var(--muted);margin-top:.15rem}
+.plist .acts{display:flex;gap:.5rem;flex:none}
+.mini{font-family:inherit;font-size:.79rem;font-weight:700;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);padding:.42rem .75rem;cursor:pointer}
+.mini.ok{background:var(--ink);color:var(--on-dark);border-color:var(--ink)}
+.mini.ok:hover{background:var(--accent);border-color:var(--accent)}
+.mini:disabled{opacity:.45;cursor:not-allowed}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -100,10 +124,7 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
     <h1><em>부원</em>만 들어오는<br>공간입니다.</h1>
     <p class="sub">활동 기록과 회의록을 여기에 모읍니다.</p>
 
-    <p class="banner" role="status">
-      <b>준비 중입니다.</b> 지금은 화면만 만들어진 상태라 실제 가입·로그인은 아직 되지 않습니다.
-      입력하신 내용은 어디에도 저장되지 않습니다.
-    </p>
+    <p class="banner alert" id="alert" role="alert" hidden></p>
 
     <div class="tabs" role="tablist" aria-label="로그인 또는 회원가입">
       <button class="tab" id="tab-login" role="tab" aria-selected="true" aria-controls="panel-login" type="button">로그인</button>
@@ -184,6 +205,49 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
       </div>
     </form>
 
+    <!-- ============ 이메일 확인 안내 ============ -->
+    <div class="done" id="view-checkemail" hidden role="status">
+      <h2>메일함을 확인해 주세요.</h2>
+      <p>가입하신 주소로 확인 메일을 보냈습니다.<br>
+        메일 속 링크를 누르셔야 가입이 완료됩니다.</p>
+      <p>메일이 보이지 않으면 스팸함도 확인해 주세요.</p>
+      <a class="back" href="#" data-go="login">← 로그인 화면으로</a>
+    </div>
+
+    <!-- ============ 거절 안내 ============ -->
+    <div class="done" id="view-rejected" hidden role="status">
+      <h2>가입이 승인되지 않았습니다.</h2>
+      <p>부원 명단에서 확인되지 않아 승인이 보류되었습니다.<br>
+        착오라고 생각되시면 아래로 문의해 주세요.</p>
+      <p><a href="mailto:medisign26@gmail.com">medisign26@gmail.com</a></p>
+      <a class="back" href="#" data-go="login">← 로그인 화면으로</a>
+    </div>
+
+    <!-- ============ 로그인 완료 (부원 홈) ============ -->
+    <div id="view-member" hidden>
+      <div class="me">
+        <div>
+          <strong id="me-handle"></strong>
+          <span class="badge" id="me-role"></span>
+          <p class="me-sub" id="me-name"></p>
+        </div>
+        <button class="linkbtn" id="logout" type="button">로그아웃</button>
+      </div>
+
+      <div class="done" style="margin-top:1.6rem">
+        <h2>자료실은 준비 중입니다.</h2>
+        <p>활동 기록과 회의록을 올릴 공간을 만들고 있습니다.<br>
+          곧 이 자리에 열립니다.</p>
+      </div>
+
+      <!-- 임원 전용 -->
+      <section id="officer-area" hidden style="margin-top:2.4rem">
+        <h2 class="sec-title">가입 승인 대기</h2>
+        <p class="sec-sub" id="pending-count">불러오는 중…</p>
+        <ul class="plist" id="pending-list"></ul>
+      </section>
+    </div>
+
     <!-- ============ 승인 대기 안내 ============ -->
     <div class="done" id="pending" hidden role="status">
       <h2>가입 신청이 접수되었습니다.</h2>
@@ -203,84 +267,220 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
   </footer>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
-  var tabs={login:document.getElementById('tab-login'),join:document.getElementById('tab-join')};
-  var panels={login:document.getElementById('panel-login'),join:document.getElementById('panel-join')};
-  var pending=document.getElementById('pending');
+  /* ===== 연결 설정 =====
+     아래 키는 브라우저에 노출되도록 만들어진 공개용(publishable) 키입니다.
+     실제 보호는 데이터베이스의 접근 규칙(RLS)이 담당합니다. */
+  var SB_URL = 'https://lfqnkwecittmiakpbohd.supabase.co';
+  var SB_KEY = 'sb_publishable_d7OyVbusCW6MiM-xNH1nvQ_YzKUaciH';
+  var sb = window.supabase.createClient(SB_URL, SB_KEY);
 
-  function show(which){
+  var $ = function(id){ return document.getElementById(id); };
+  var tabs   = {login:$('tab-login'), join:$('tab-join')};
+  var panels = {login:$('panel-login'), join:$('panel-join')};
+  var views  = ['pending','view-checkemail','view-rejected','view-member'];
+  var alertBox = $('alert');
+
+  function hideAll(){
+    document.querySelector('.tabs').hidden = true;
+    panels.login.hidden = true; panels.join.hidden = true;
+    views.forEach(function(v){ $(v).hidden = true; });
+  }
+  function showAuth(which){
+    hideAll();
+    document.querySelector('.tabs').hidden = false;
     Object.keys(tabs).forEach(function(k){
       tabs[k].setAttribute('aria-selected', String(k===which));
       panels[k].hidden = (k!==which);
     });
-    pending.hidden = true;
-    document.querySelector('.tabs').hidden = false;
   }
-  tabs.login.addEventListener('click',function(){show('login')});
-  tabs.join.addEventListener('click',function(){show('join')});
-  document.addEventListener('click',function(e){
-    var go=e.target.closest('[data-go]');
-    if(go){ e.preventDefault(); show(go.dataset.go); }
+  function showView(id){ hideAll(); $(id).hidden = false; }
+  function say(msg){
+    if(!msg){ alertBox.hidden = true; return; }
+    alertBox.textContent = msg; alertBox.hidden = false;
+    alertBox.scrollIntoView({block:'nearest'});
+  }
+
+  tabs.login.addEventListener('click', function(){ say(''); showAuth('login'); });
+  tabs.join.addEventListener('click',  function(){ say(''); showAuth('join');  });
+  document.addEventListener('click', function(e){
+    var go = e.target.closest('[data-go]');
+    if(go){ e.preventDefault(); say(''); showAuth(go.dataset.go); }
   });
 
   /* ===== 입력 검증 ===== */
   function setErr(input,msg){
-    var box=input.closest('.field').querySelector('.err');
-    box.textContent=msg||'';
+    var box = input.closest('.field').querySelector('.err');
+    box.textContent = msg || '';
     input.setAttribute('aria-invalid', msg?'true':'false');
     return !msg;
   }
-  var RULES={
-    email:function(v){ if(!v)return '이메일을 입력해 주세요.';
-      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?'':'이메일 형식이 올바르지 않습니다.'; },
-    password:function(v){ if(!v)return '비밀번호를 입력해 주세요.';
+  var RULES = {
+    email:function(v){ if(!v) return '이메일을 입력해 주세요.';
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : '이메일 형식이 올바르지 않습니다.'; },
+    password:function(v){ if(!v) return '비밀번호를 입력해 주세요.';
       if(v.length<8) return '8자 이상으로 만들어 주세요.';
       if(!/[A-Za-z]/.test(v)||!/[0-9]/.test(v)) return '영문과 숫자를 모두 포함해 주세요.';
       return ''; },
-    name:function(v){ return v.trim()?'':'이름을 입력해 주세요.'; },
-    studentId:function(v){ v=v.trim(); if(!v)return '학번을 입력해 주세요.';
+    name:function(v){ return v.trim() ? '' : '이름을 입력해 주세요.'; },
+    studentId:function(v){ v=v.trim(); if(!v) return '학번을 입력해 주세요.';
       if(!/^[0-9]+$/.test(v)) return '숫자만 입력해 주세요.';
       return v.length===8 ? '' : '학번은 8자리입니다. (현재 '+v.length+'자리)'; },
-    handle:function(v){ if(!v.trim())return '표시 이름을 입력해 주세요.';
-      return /^[A-Za-z0-9]{2,16}$/.test(v.trim())?'':'영문과 숫자 2~16자로 입력해 주세요.'; }
+    handle:function(v){ v=v.trim(); if(!v) return '표시 이름을 입력해 주세요.';
+      return /^[A-Za-z0-9]{2,16}$/.test(v) ? '' : '영문과 숫자 2~16자로 입력해 주세요.'; }
   };
   function validate(form){
-    var ok=true;
+    var ok = true;
     form.querySelectorAll('input').forEach(function(i){
       if(i.type==='checkbox') return;
-      var rule=RULES[i.name];
+      var rule = RULES[i.name];
       if(rule) ok = setErr(i, rule(i.value)) && ok;
     });
-    var p=form.querySelector('[name=password]'), p2=form.querySelector('[name=password2]');
-    if(p2) ok = setErr(p2, p2.value? (p.value===p2.value?'':'비밀번호가 서로 다릅니다.') : '비밀번호를 한 번 더 입력해 주세요.') && ok;
-    var ag=form.querySelector('[name=agree]');
-    if(ag && !ag.checked){ ok=false; ag.focus(); }
+    var p = form.querySelector('[name=password]'), p2 = form.querySelector('[name=password2]');
+    if(p2) ok = setErr(p2, p2.value ? (p.value===p2.value ? '' : '비밀번호가 서로 다릅니다.')
+                                    : '비밀번호를 한 번 더 입력해 주세요.') && ok;
+    var ag = form.querySelector('[name=agree]');
+    if(ag && !ag.checked){ ok = false; ag.focus(); }
     return ok;
   }
-  Object.keys(panels).forEach(function(k){
-    panels[k].addEventListener('submit',function(e){
-      e.preventDefault();
-      if(!validate(this)) { var bad=this.querySelector('[aria-invalid="true"]'); if(bad) bad.focus(); return; }
 
-      /* TODO(백엔드 연결): 이 자리에서 인증 서비스를 호출합니다.
-         - 가입: signUp({email, password}) 후 프로필 테이블에 name/studentId/handle 저장, status='pending'
-         - 로그인: signInWithPassword({email, password}) 후 status==='approved' 인지 확인
-         지금은 서버가 없으므로 안내 화면만 보여줍니다. */
-      if(k==='join'){
-        document.querySelector('.tabs').hidden=true;
-        panels.join.hidden=true; panels.login.hidden=true;
-        pending.hidden=false;
-        pending.scrollIntoView({block:'nearest'});
-      } else {
-        setErr(this.querySelector('[name=password]'),'아직 서버가 연결되지 않아 로그인할 수 없습니다.');
-      }
+  /* ===== 오류 메시지를 우리말로 ===== */
+  function ko(err){
+    var m = (err && (err.message || err.error_description) || '').toLowerCase();
+    if(m.indexOf('invalid login credentials') > -1) return '이메일 또는 비밀번호가 올바르지 않습니다.';
+    if(m.indexOf('email not confirmed') > -1)       return '아직 이메일 확인이 끝나지 않았습니다. 메일함을 확인해 주세요.';
+    if(m.indexOf('already registered') > -1 ||
+       m.indexOf('already been registered') > -1)   return '가입할 수 없는 정보입니다. 이미 가입하셨다면 로그인해 주세요.';
+    if(m.indexOf('이미 등록된 학번') > -1)            return '이미 등록된 학번입니다.';
+    if(m.indexOf('이미 사용 중인 표시 이름') > -1)     return '이미 사용 중인 표시 이름입니다.';
+    if(m.indexOf('database error saving new user') > -1)
+      return '입력하신 정보로는 가입할 수 없습니다. 학번(8자리 숫자)과 표시 이름(영문·숫자 2~16자)을 확인해 주세요. 이미 등록된 학번이거나 사용 중인 표시 이름일 수도 있습니다.';
+    if(m.indexOf('is invalid') > -1 && m.indexOf('email') > -1)
+      return '사용할 수 없는 이메일 주소입니다. 다른 주소로 시도해 주세요.';
+    if(m.indexOf('rate limit') > -1 ||
+       m.indexOf('too many') > -1)                  return '시도가 너무 잦습니다. 잠시 뒤에 다시 해주세요.';
+    if(m.indexOf('failed to fetch') > -1)           return '연결에 실패했습니다. 인터넷 상태를 확인해 주세요.';
+    return (err && err.message) ? err.message : '알 수 없는 오류가 생겼습니다.';
+  }
+
+  /* ===== 로그인 이후 상태에 따라 화면 나누기 ===== */
+  function route(){
+    return sb.auth.getSession().then(function(res){
+      var session = res.data.session;
+      if(!session){ showAuth('login'); return; }
+      return sb.from('members').select('name,handle,role,status').eq('id', session.user.id).maybeSingle()
+        .then(function(r){
+          if(r.error) throw r.error;
+          var me = r.data;
+          if(!me){ say('프로필을 찾을 수 없습니다. 임원에게 문의해 주세요.'); return sb.auth.signOut().then(function(){ showAuth('login'); }); }
+          if(me.status === 'pending'){  showView('pending');       return; }
+          if(me.status === 'rejected'){ showView('view-rejected'); return; }
+          $('me-handle').textContent = me.handle;
+          $('me-name').textContent   = me.name + ' 부원';
+          $('me-role').textContent   = (me.role === 'officer') ? '임원' : '부원';
+          showView('view-member');
+          if(me.role === 'officer'){ $('officer-area').hidden = false; loadPending(); }
+        });
+    }).catch(function(e){ say(ko(e)); showAuth('login'); });
+  }
+
+  /* ===== 임원: 승인 대기 목록 ===== */
+  function loadPending(){
+    var list = $('pending-list'), cnt = $('pending-count');
+    return sb.from('members').select('id,name,student_id,handle,created_at')
+      .eq('status','pending').order('created_at',{ascending:true})
+      .then(function(r){
+        if(r.error) throw r.error;
+        list.innerHTML = '';
+        cnt.textContent = r.data.length ? (r.data.length + '명이 기다리고 있습니다.') : '대기 중인 신청이 없습니다.';
+        r.data.forEach(function(m){
+          var li = document.createElement('li');
+          var who = document.createElement('div'); who.className = 'who';
+          who.textContent = m.name;
+          var sub = document.createElement('span');
+          sub.textContent = '학번 ' + m.student_id + ' · 표시 이름 ' + m.handle;
+          who.appendChild(sub);
+          var acts = document.createElement('div'); acts.className = 'acts';
+          [['승인','approved','ok'],['거절','rejected','']].forEach(function(a){
+            var b = document.createElement('button');
+            b.className = 'mini ' + a[2]; b.type = 'button'; b.textContent = a[0];
+            b.addEventListener('click', function(){
+              acts.querySelectorAll('button').forEach(function(x){ x.disabled = true; });
+              sb.from('members').update({status:a[1]}).eq('id', m.id).then(function(u){
+                if(u.error){ say(ko(u.error)); acts.querySelectorAll('button').forEach(function(x){ x.disabled=false; }); return; }
+                li.remove();
+                loadPending();
+              });
+            });
+            acts.appendChild(b);
+          });
+          li.appendChild(who); li.appendChild(acts);
+          list.appendChild(li);
+        });
+      }).catch(function(e){ cnt.textContent = ko(e); });
+  }
+
+  /* ===== 가입 ===== */
+  panels.join.addEventListener('submit', function(e){
+    e.preventDefault(); say('');
+    if(!validate(this)){ var bad=this.querySelector('[aria-invalid="true"]'); if(bad) bad.focus(); return; }
+    var btn = this.querySelector('.btn'); btn.disabled = true; btn.textContent = '신청하는 중…';
+    var f = this;
+    sb.auth.signUp({
+      email: f.email.value.trim(),
+      password: f.password.value,
+      options:{ data:{
+        name: f.name.value.trim(),
+        student_id: f.studentId.value.trim(),
+        handle: f.handle.value.trim()
+      }}
+    }).then(function(r){
+      btn.disabled = false; btn.textContent = '가입 신청하기';
+      if(r.error){ say(ko(r.error)); return; }
+      if(r.data.session){ route(); }           /* 이메일 확인이 꺼져 있는 경우 */
+      else { showView('view-checkemail'); }    /* 확인 메일을 보낸 경우 */
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = '가입 신청하기'; say(ko(err));
     });
   });
-  document.getElementById('forgot').addEventListener('click',function(e){
-    e.preventDefault();
-    alert('비밀번호 재설정은 서버 연결 후 이메일로 자동 발송됩니다.');
+
+  /* ===== 로그인 ===== */
+  panels.login.addEventListener('submit', function(e){
+    e.preventDefault(); say('');
+    if(!validate(this)){ var bad=this.querySelector('[aria-invalid="true"]'); if(bad) bad.focus(); return; }
+    var btn = this.querySelector('.btn'); btn.disabled = true; btn.textContent = '확인하는 중…';
+    var f = this;
+    sb.auth.signInWithPassword({ email: f.email.value.trim(), password: f.password.value })
+      .then(function(r){
+        btn.disabled = false; btn.textContent = '로그인';
+        if(r.error){ say(ko(r.error)); return; }
+        f.password.value = '';
+        route();
+      }).catch(function(err){
+        btn.disabled = false; btn.textContent = '로그인'; say(ko(err));
+      });
   });
+
+  /* ===== 비밀번호 재설정 ===== */
+  $('forgot').addEventListener('click', function(e){
+    e.preventDefault(); say('');
+    var em = ($('li-email').value || '').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){
+      setErr($('li-email'), '재설정 메일을 받을 이메일을 먼저 입력해 주세요.');
+      $('li-email').focus(); return;
+    }
+    sb.auth.resetPasswordForEmail(em, { redirectTo: location.origin + location.pathname })
+      .then(function(){ say('재설정 메일을 보냈습니다. 메일함을 확인해 주세요.'); });
+  });
+
+  /* ===== 로그아웃 ===== */
+  $('logout').addEventListener('click', function(){
+    sb.auth.signOut().then(function(){ say(''); showAuth('login'); });
+  });
+
+  route();
 })();
 </script>
 </body>
