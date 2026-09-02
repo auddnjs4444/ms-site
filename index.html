@@ -176,7 +176,7 @@ section{padding-block:var(--pad-sec)}
 /* ============ 03 하는 일 ============ */
 .work-list{border-bottom:1px solid var(--line)}
 .work-row{
-  position:relative;display:grid;grid-template-columns:4.5rem 1fr auto;gap:1.5rem;align-items:baseline;
+  position:relative;display:grid;grid-template-columns:4.5rem 1fr;gap:1.5rem;align-items:baseline;
   padding:clamp(1.6rem,3vw,2.3rem) clamp(.4rem,1vw,1rem);border-top:1px solid var(--line);cursor:default;
 }
 .work-row::before{
@@ -188,11 +188,19 @@ section{padding-block:var(--pad-sec)}
 .work-row:hover::before,.work-row.active::before{transform:scaleY(1)}
 .work-row:hover h3,.work-row:hover .w-num,.work-row.active h3,.work-row.active .w-num{color:var(--on-dark)}
 .work-row:hover p,.work-row.active p{color:rgba(246,246,244,.85)}
-.work-row:hover .w-tag,.work-row.active .w-tag{color:var(--accent-dark)}
 .w-num{font-size:.78rem;font-weight:650;letter-spacing:.14em;color:var(--muted)}
 .work-row h3{font-size:clamp(1.25rem,2.4vw,1.8rem);letter-spacing:-.02em}
 .work-row p{margin-top:.5rem;color:var(--muted);font-size:.95rem;line-height:1.7;max-width:52ch}
-.w-tag{font-size:.7rem;font-weight:650;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+/* 활동 사진 썸네일 — 사진이 하나라도 있을 때만 우측 칸이 생깁니다 */
+.work-list:has(.w-thumb) .work-row{grid-template-columns:4.5rem 1fr 8rem}
+.w-thumb{
+  align-self:center;display:block;width:100%;aspect-ratio:3/2;overflow:hidden;
+  border:1px solid var(--line);background:var(--surface);
+}
+.w-thumb img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s cubic-bezier(.5,0,.2,1)}
+.work-row:hover .w-thumb img,.work-row.active .w-thumb img{transform:scale(1.05)}
+.work-row:hover .w-thumb,.work-row.active .w-thumb{border-color:rgba(246,246,244,.35)}
 
 /* ============ 04 이름의 의미 ============ */
 .twin{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1rem}
@@ -366,10 +374,13 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   .ab-tag{padding-top:0}
 }
 @media (max-width:640px){
-  .work-row{grid-template-columns:2.6rem 1fr;grid-template-areas:"n b" ". b2"}
+  .work-row{grid-template-columns:2.6rem 1fr;grid-template-areas:"n b";gap:1rem}
+  .work-list:has(.w-thumb) .work-row{grid-template-columns:2.6rem 1fr}
+  /* 사진이 있는 행만 제목 위로 썸네일을 올립니다 */
+  .work-row:has(.w-thumb){grid-template-areas:"n t" ". b";gap:.9rem 1rem}
   .w-num{grid-area:n}
   .work-row .w-body{grid-area:b}
-  .w-tag{display:none}
+  .w-thumb{grid-area:t;max-width:190px}
   .head-clock{display:none}
   .arc-row{grid-template-columns:1fr;gap:.4rem}
   .gal{grid-template-columns:1fr;gap:1.6rem}
@@ -525,6 +536,10 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     <p class="lead lead-follow rv" style="--d:.2s">
       올해 메디사인이 하는 다섯 가지 활동입니다.
     </p>
+    <!-- 활동 사진 넣는 법: 사진이 있는 <li> 안, </div> 다음 줄에 아래 한 줄을 넣으세요.
+         <span class="w-thumb"><img src="assets/work/파일명.jpg" alt="의료 수어 스터디 활동 모습"></span>
+         사진이 없는 행에는 이 줄을 넣지 마세요 — 빈 상자를 만들지 않습니다.
+         alt에는 '사진'이 아니라 무엇이 보이는지를 적어주세요. -->
     <ul class="work-list rv" style="--d:.15s;margin-top:3rem">
       <li class="work-row" data-idx="1">
         <span class="w-num" aria-hidden="true">01</span>
@@ -533,7 +548,6 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>“어디가 아프세요?”부터 검사 설명까지 — 진료 상황에서 쓰는 기초 수어를
             정기 모임으로 함께 익힙니다.<br> 모든 활동의 뼈대입니다.</p>
         </div>
-        <span class="w-tag en" lang="en">Study</span>
       </li>
       <li class="work-row" data-idx="2">
         <span class="w-num" aria-hidden="true">02</span>
@@ -542,7 +556,6 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>병원 이용 절차와 건강 상식을 자막·수어 영상, 카드뉴스로 만들어 배포합니다.<br>
             결과물이 남는 활동이라 기록도 함께 쌓입니다.</p>
         </div>
-        <span class="w-tag en" lang="en">Content</span>
       </li>
       <li class="work-row" data-idx="3">
         <span class="w-num" aria-hidden="true">03</span>
@@ -551,7 +564,6 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>응급실·접수 상황에서 바로 쓸 수 있는 필담·그림 카드를 제작해
             지역 병원과 보건소에 전하는 캠페인입니다.</p>
         </div>
-        <span class="w-tag en" lang="en">Toolkit</span>
       </li>
       <li class="work-row" data-idx="4">
         <span class="w-num" aria-hidden="true">04</span>
@@ -560,7 +572,6 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>농아인복지관과 함께 혈압·혈당 측정, 복약 교육 등 간호대의 강점을 살린
             건강교육을 합니다.<br> 기관과의 신뢰를 해마다 쌓아가는 핵심 활동입니다.</p>
         </div>
-        <span class="w-tag en" lang="en">Outreach</span>
       </li>
       <li class="work-row" data-idx="5">
         <span class="w-num" aria-hidden="true">05</span>
@@ -569,7 +580,6 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
           <p>수어 배우기 부스, 투명 마스크 캠페인 — 캠퍼스의 감수성을 넓히면서
             새로운 동료를 만나는 자리이기도 합니다.</p>
         </div>
-        <span class="w-tag en" lang="en">Campaign</span>
       </li>
     </ul>
   </div>
