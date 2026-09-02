@@ -1,6 +1,6 @@
 -- ============================================================
 -- 02. 가입 처리 보완
--- 계정이 만들어질 때 프로필(이름·학번·표시이름)도 함께 만들어 줍니다.
+-- 계정이 만들어질 때 프로필(이름·학번·닉네임)도 함께 만들어 줍니다.
 -- 이메일 인증을 켜두어 가입 직후 로그인 상태가 아니어도 안전하게 저장됩니다.
 -- 이 파일도 여러 번 실행해도 괜찮습니다.
 -- ============================================================
@@ -41,19 +41,19 @@ declare
   v_handle text := btrim(coalesce(new.raw_user_meta_data->>'handle',''));
 begin
   if v_name = '' or v_sid = '' or v_handle = '' then
-    raise exception '이름·학번·표시 이름을 모두 입력해 주세요.';
+    raise exception '이름·학번·닉네임을 모두 입력해 주세요.';
   end if;
   if v_sid !~ '^[0-9]{8}$' then
     raise exception '학번은 8자리 숫자여야 합니다.';
   end if;
-  if v_handle !~ '^[A-Za-z0-9]{2,16}$' then
-    raise exception '표시 이름은 영문·숫자 2~16자여야 합니다.';
+  if v_handle !~ '^[0-9A-Za-z가-힣]{2,16}$' then
+    raise exception '닉네임은 한글·영문·숫자 2~16자여야 합니다.';
   end if;
   if exists (select 1 from public.members m where m.student_id = v_sid) then
     raise exception '이미 등록된 학번입니다.';
   end if;
   if exists (select 1 from public.members m where lower(m.handle) = lower(v_handle)) then
-    raise exception '이미 사용 중인 표시 이름입니다.';
+    raise exception '이미 사용 중인 닉네임입니다.';
   end if;
 
   insert into public.members (id, name, student_id, handle)

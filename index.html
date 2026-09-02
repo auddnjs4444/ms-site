@@ -113,6 +113,11 @@ header{
 #menu.open nav a{opacity:1;transform:none}
 #menu nav a:hover{color:var(--accent-dark)}
 #menu nav a .n{font-family:var(--serif);font-style:italic;font-size:.85rem;font-weight:600;color:var(--on-dark-muted);min-width:3.2rem}
+/* 부원 전용 — 사이트 섹션이 아니라 별도 페이지라 구분해서 보여줍니다 */
+#menu nav .menu-members{margin-top:1.1rem}
+#menu nav .menu-members a{border-bottom:0;color:var(--on-dark-soft);font-size:clamp(1.1rem,2.6vw,1.5rem)}
+#menu nav .menu-members a:hover{color:var(--accent-dark)}
+#menu nav .menu-members .n{font-family:inherit;font-style:normal;color:var(--accent-dark)}
 #menu .menu-meta{
   display:flex;justify-content:space-between;gap:1rem 2rem;flex-wrap:wrap;
   margin-top:3rem;color:var(--on-dark-muted);
@@ -444,12 +449,12 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
         <li><a href="#about" style="--d:.16s"><span class="n" lang="en">04</span>우리는 누구</a></li>
         <li><a href="#activity" style="--d:.22s"><span class="n" lang="en">05</span>활동 기록</a></li>
         <li><a href="#contact" style="--d:.28s"><span class="n" lang="en">06</span>함께하기</a></li>
+        <li class="menu-members"><a href="members.html" style="--d:.34s"><span class="n" aria-hidden="true">↗</span>부원 전용</a></li>
       </ul>
     </nav>
     <div class="menu-meta micro">
       <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">Instagram — @medisign.2026</a>
       <a href="mailto:medisign26@gmail.com">medisign26@gmail.com</a>
-      <a href="members.html">부원 전용 →</a>
       <span class="en" lang="en">EST. 2026</span>
       <span data-clock>--:-- KST</span>
     </div>

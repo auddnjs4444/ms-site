@@ -11,7 +11,7 @@ create table if not exists public.members (
   id          uuid primary key references auth.users(id) on delete cascade,
   name        text not null check (length(btrim(name)) between 1 and 20),
   student_id  text not null unique check (student_id ~ '^[0-9]{8}$'),   -- 학번 8자리
-  handle      text not null unique check (handle ~ '^[A-Za-z0-9]{2,16}$'), -- 표시 이름
+  handle      text not null unique check (handle ~ '^[0-9A-Za-z가-힣]{2,16}$'), -- 닉네임
   role        text not null default 'member'  check (role   in ('member','officer')),
   status      text not null default 'pending' check (status in ('pending','approved','rejected')),
   created_at  timestamptz not null default now(),
@@ -19,7 +19,7 @@ create table if not exists public.members (
 );
 
 -- ── 2. 활동 기록 (자료실) ───────────────────────────────────
--- 작성자 이름은 handle(표시 이름)만 남깁니다.
+-- 작성자 이름은 handle(닉네임)만 남깁니다.
 -- 이렇게 해두면 기록을 읽을 때 members 표를 볼 필요가 없어,
 -- 이름·학번이 노출될 통로 자체가 생기지 않습니다.
 create table if not exists public.records (
@@ -80,7 +80,7 @@ drop trigger if exists members_guard on public.members;
 create trigger members_guard before insert or update on public.members
   for each row execute function public.guard_member_columns();
 
--- 작성자 표시 이름을 서버에서 채웁니다 (다른 사람 이름으로 못 쓰게)
+-- 작성자 닉네임을 서버에서 채웁니다 (다른 사람 이름으로 못 쓰게)
 create or replace function public.set_record_author()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
