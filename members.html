@@ -251,9 +251,10 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
     <!-- ============ 승인 대기 안내 ============ -->
     <div class="done" id="pending" hidden role="status">
       <h2>가입 신청이 접수되었습니다.</h2>
-      <p>임원이 부원 명단과 대조한 뒤 승인합니다.
-        승인이 완료되면 신청하신 이메일로 알려드립니다.<br>
+      <p>임원이 부원 명단과 대조한 뒤 승인합니다.<br>
         승인 전까지는 자료실에 들어올 수 없습니다.</p>
+      <p>따로 알림 메일은 가지 않습니다.<br>
+        승인되었는지 확인하시려면 이 화면에서 새로고침해 주세요.</p>
       <p>며칠이 지나도 연락이 없으면 인스타그램
         <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">@medisign.2026</a>
         으로 문의해 주세요.</p>
@@ -403,12 +404,17 @@ footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
           sub.textContent = '학번 ' + m.student_id + ' · 닉네임 ' + m.handle;
           who.appendChild(sub);
           var acts = document.createElement('div'); acts.className = 'acts';
-          [['승인','approved','ok'],['거절','rejected','']].forEach(function(a){
+          [['승인','approved','ok'],['거절','rejected',''],['삭제','__delete__','']].forEach(function(a){
             var b = document.createElement('button');
             b.className = 'mini ' + a[2]; b.type = 'button'; b.textContent = a[0];
             b.addEventListener('click', function(){
+              if(a[1]==='__delete__' &&
+                 !confirm(m.name + ' 님의 신청을 지웁니다.\n이름과 학번이 삭제되며 되돌릴 수 없습니다.\n(이메일 계정은 Supabase 대시보드에서 따로 지워야 합니다)')) return;
               acts.querySelectorAll('button').forEach(function(x){ x.disabled = true; });
-              sb.from('members').update({status:a[1]}).eq('id', m.id).then(function(u){
+              var q = (a[1]==='__delete__')
+                ? sb.from('members').delete().eq('id', m.id)
+                : sb.from('members').update({status:a[1]}).eq('id', m.id);
+              q.then(function(u){
                 if(u.error){ say(ko(u.error)); acts.querySelectorAll('button').forEach(function(x){ x.disabled=false; }); return; }
                 li.remove();
                 loadPending();
