@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부원 전용 — MEDISIGN</title>
+<meta name="description" content="메디사인 부원 전용 공간입니다. 승인된 부원만 이용할 수 있습니다.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F2F1EB">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23188144'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='800' fill='%23F6F6F4' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F1EB; --surface:#F6F6F4; --ink:#121210; --ink-soft:#3A3A36; --muted:#706E63;
+  --line:rgba(18,18,16,.14); --accent:#188144; --accent-deep:#0F6B37;
+  --danger:#B3261E; --on-dark:#F6F6F4;
+  --font:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;
+  line-height:1.7;letter-spacing:-.011em;word-break:keep-all;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.en{font-family:var(--serif);font-style:italic;letter-spacing:.02em}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:fixed;left:1rem;top:-4rem;z-index:200;background:var(--ink);color:var(--on-dark);
+  padding:.7rem 1.2rem;font-weight:700;text-decoration:none;transition:top .2s}
+.skip:focus{top:1rem}
+
+.wrap{width:min(460px,92vw);margin-inline:auto;padding:clamp(2rem,7vw,4rem) 0 4rem}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;margin-bottom:clamp(2.2rem,6vw,3.4rem)}
+.brand img{display:block;height:40px;width:auto;filter:invert(1)}/* 흰 획 로고를 밝은 배경용 검정으로 반전 */
+.brand span{font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+h1{font-size:clamp(1.7rem,5vw,2.3rem);letter-spacing:-.035em;line-height:1.12;font-weight:600}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{margin-top:.9rem;color:var(--muted);font-size:.94rem}
+
+/* 서버 연결 전 안내 */
+.banner{margin-top:1.6rem;border:1px solid var(--line);background:var(--surface);
+  padding:1rem 1.1rem;font-size:.86rem;line-height:1.7;color:var(--ink-soft)}
+.banner b{color:var(--accent-deep)}
+
+/* 탭 */
+.tabs{display:flex;gap:0;margin-top:2.2rem;border-bottom:1px solid var(--line)}
+.tab{flex:1;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;
+  font-family:inherit;font-size:.95rem;font-weight:650;color:var(--muted);
+  padding:.85rem .4rem;cursor:pointer;transition:color .2s,border-color .2s}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+
+form{margin-top:2rem}
+.field{margin-bottom:1.35rem}
+.field label{display:block;font-size:.84rem;font-weight:650;margin-bottom:.45rem}
+.field .hint{display:block;font-weight:400;color:var(--muted);font-size:.79rem;margin-top:.25rem}
+.field input{width:100%;font-family:inherit;font-size:.98rem;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);padding:.78rem .9rem;transition:border-color .2s}
+.field input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(24,129,68,.13)}
+.field input[aria-invalid="true"]{border-color:var(--danger)}
+.err{display:block;color:var(--danger);font-size:.81rem;margin-top:.35rem;font-weight:600}
+.err:empty{display:none}
+
+.agree{display:flex;gap:.65rem;align-items:flex-start;margin:1.8rem 0 1.4rem;
+  border-top:1px solid var(--line);padding-top:1.5rem}
+.agree input{margin-top:.35rem;width:1.05rem;height:1.05rem;accent-color:var(--accent);flex:none}
+.agree label{font-size:.87rem;line-height:1.65;color:var(--ink-soft)}
+.agree a{color:var(--accent-deep);text-underline-offset:3px}
+
+.btn{width:100%;font-family:inherit;font-size:.98rem;font-weight:700;letter-spacing:-.01em;
+  background:var(--ink);color:var(--on-dark);border:0;padding:.95rem 1rem;cursor:pointer;
+  transition:background .2s,opacity .2s}
+.btn:hover{background:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed;background:var(--ink)}
+.below{margin-top:1.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  font-size:.85rem;color:var(--muted)}
+.below a{color:var(--accent-deep);text-underline-offset:3px}
+
+/* 결과 화면 */
+.done{margin-top:2rem;border:1px solid var(--line);background:var(--surface);padding:1.8rem 1.5rem}
+.done h2{font-size:1.15rem;letter-spacing:-.02em;font-weight:650}
+.done p{margin-top:.8rem;color:var(--ink-soft);font-size:.92rem;line-height:1.75}
+.done .back{display:inline-block;margin-top:1.4rem;font-size:.88rem;font-weight:650;color:var(--accent-deep)}
+
+footer{margin-top:3rem;border-top:1px solid var(--line);padding-top:1.4rem;
+  font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 바로가기</a>
+
+<div class="wrap">
+  <a class="brand" href="index.html">
+    <img src="assets/medisign-logo-white.png" alt="MEDISIGN" width="292" height="359">
+    <span>부원 전용</span>
+  </a>
+
+  <main id="main">
+    <h1><em>부원</em>만 들어오는<br>공간입니다.</h1>
+    <p class="sub">활동 기록과 회의록을 여기에 모읍니다.</p>
+
+    <p class="banner" role="status">
+      <b>준비 중입니다.</b> 지금은 화면만 만들어진 상태라 실제 가입·로그인은 아직 되지 않습니다.
+      입력하신 내용은 어디에도 저장되지 않습니다.
+    </p>
+
+    <div class="tabs" role="tablist" aria-label="로그인 또는 회원가입">
+      <button class="tab" id="tab-login" role="tab" aria-selected="true" aria-controls="panel-login" type="button">로그인</button>
+      <button class="tab" id="tab-join" role="tab" aria-selected="false" aria-controls="panel-join" type="button">가입 신청</button>
+    </div>
+
+    <!-- ============ 로그인 ============ -->
+    <form id="panel-login" role="tabpanel" aria-labelledby="tab-login" novalidate>
+      <div class="field">
+        <label for="li-email">이메일</label>
+        <input id="li-email" name="email" type="email" autocomplete="username" inputmode="email" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <div class="field">
+        <label for="li-pw">비밀번호</label>
+        <input id="li-pw" name="password" type="password" autocomplete="current-password" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <button class="btn" type="submit">로그인</button>
+      <div class="below">
+        <a href="#" id="forgot">비밀번호를 잊으셨나요?</a>
+        <span>아직 부원이 아니신가요? <a href="#" data-go="join">가입 신청</a></span>
+      </div>
+    </form>
+
+    <!-- ============ 가입 신청 ============ -->
+    <form id="panel-join" role="tabpanel" aria-labelledby="tab-join" novalidate hidden>
+      <div class="field">
+        <label for="jo-email">이메일
+          <span class="hint">로그인할 때 쓰고, 비밀번호를 잊으면 여기로 재설정 메일이 갑니다.</span>
+        </label>
+        <input id="jo-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <div class="field">
+        <label for="jo-pw">비밀번호
+          <span class="hint">8자 이상, 영문과 숫자를 모두 포함해 주세요.</span>
+        </label>
+        <input id="jo-pw" name="password" type="password" autocomplete="new-password" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <div class="field">
+        <label for="jo-pw2">비밀번호 확인</label>
+        <input id="jo-pw2" name="password2" type="password" autocomplete="new-password" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <div class="field">
+        <label for="jo-name">이름</label>
+        <input id="jo-name" name="name" type="text" autocomplete="name" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <div class="field">
+        <label for="jo-sid">학번
+          <span class="hint">부원 명단과 대조하는 데에만 씁니다. 다른 부원에게는 보이지 않습니다.</span>
+        </label>
+        <input id="jo-sid" name="studentId" type="text" inputmode="numeric" autocomplete="off" required>
+        <span class="err" role="alert"></span>
+      </div>
+      <div class="field">
+        <label for="jo-handle">표시 이름
+          <span class="hint">자료실에서 다른 부원에게 보이는 이름입니다. 영문·숫자 2~16자.</span>
+        </label>
+        <input id="jo-handle" name="handle" type="text" autocomplete="off" required>
+        <span class="err" role="alert"></span>
+      </div>
+
+      <div class="agree">
+        <input id="jo-agree" name="agree" type="checkbox" required>
+        <label for="jo-agree">
+          이름·학번·이메일을 부원 확인과 동아리 운영을 위해 수집하는 데 동의합니다.
+          자세한 내용은 <a href="privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a>에서 확인하실 수 있습니다.
+        </label>
+      </div>
+
+      <button class="btn" type="submit">가입 신청하기</button>
+      <div class="below">
+        <span>이미 계정이 있으신가요? <a href="#" data-go="login">로그인</a></span>
+      </div>
+    </form>
+
+    <!-- ============ 승인 대기 안내 ============ -->
+    <div class="done" id="pending" hidden role="status">
+      <h2>가입 신청이 접수되었습니다.</h2>
+      <p>임원이 부원 명단과 대조한 뒤 승인합니다.
+        승인이 완료되면 신청하신 이메일로 알려드립니다.<br>
+        승인 전까지는 자료실에 들어올 수 없습니다.</p>
+      <p>며칠이 지나도 연락이 없으면 인스타그램
+        <a href="https://instagram.com/medisign.2026" target="_blank" rel="noopener">@medisign.2026</a>
+        으로 문의해 주세요.</p>
+      <a class="back" href="#" data-go="login">← 로그인 화면으로</a>
+    </div>
+  </main>
+
+  <footer>
+    <a href="index.html">← 메디사인 홈</a>
+    <a href="privacy.html">개인정보 처리방침</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var tabs={login:document.getElementById('tab-login'),join:document.getElementById('tab-join')};
+  var panels={login:document.getElementById('panel-login'),join:document.getElementById('panel-join')};
+  var pending=document.getElementById('pending');
+
+  function show(which){
+    Object.keys(tabs).forEach(function(k){
+      tabs[k].setAttribute('aria-selected', String(k===which));
+      panels[k].hidden = (k!==which);
+    });
+    pending.hidden = true;
+    document.querySelector('.tabs').hidden = false;
+  }
+  tabs.login.addEventListener('click',function(){show('login')});
+  tabs.join.addEventListener('click',function(){show('join')});
+  document.addEventListener('click',function(e){
+    var go=e.target.closest('[data-go]');
+    if(go){ e.preventDefault(); show(go.dataset.go); }
+  });
+
+  /* ===== 입력 검증 ===== */
+  function setErr(input,msg){
+    var box=input.closest('.field').querySelector('.err');
+    box.textContent=msg||'';
+    input.setAttribute('aria-invalid', msg?'true':'false');
+    return !msg;
+  }
+  var RULES={
+    email:function(v){ if(!v)return '이메일을 입력해 주세요.';
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?'':'이메일 형식이 올바르지 않습니다.'; },
+    password:function(v){ if(!v)return '비밀번호를 입력해 주세요.';
+      if(v.length<8) return '8자 이상으로 만들어 주세요.';
+      if(!/[A-Za-z]/.test(v)||!/[0-9]/.test(v)) return '영문과 숫자를 모두 포함해 주세요.';
+      return ''; },
+    name:function(v){ return v.trim()?'':'이름을 입력해 주세요.'; },
+    studentId:function(v){ if(!v.trim())return '학번을 입력해 주세요.';
+      return /^[0-9]{4,12}$/.test(v.trim())?'':'학번은 숫자로만 입력해 주세요.'; },
+    handle:function(v){ if(!v.trim())return '표시 이름을 입력해 주세요.';
+      return /^[A-Za-z0-9]{2,16}$/.test(v.trim())?'':'영문과 숫자 2~16자로 입력해 주세요.'; }
+  };
+  function validate(form){
+    var ok=true;
+    form.querySelectorAll('input').forEach(function(i){
+      if(i.type==='checkbox') return;
+      var rule=RULES[i.name];
+      if(rule) ok = setErr(i, rule(i.value)) && ok;
+    });
+    var p=form.querySelector('[name=password]'), p2=form.querySelector('[name=password2]');
+    if(p2) ok = setErr(p2, p2.value? (p.value===p2.value?'':'비밀번호가 서로 다릅니다.') : '비밀번호를 한 번 더 입력해 주세요.') && ok;
+    var ag=form.querySelector('[name=agree]');
+    if(ag && !ag.checked){ ok=false; ag.focus(); }
+    return ok;
+  }
+  Object.keys(panels).forEach(function(k){
+    panels[k].addEventListener('submit',function(e){
+      e.preventDefault();
+      if(!validate(this)) { var bad=this.querySelector('[aria-invalid="true"]'); if(bad) bad.focus(); return; }
+
+      /* TODO(백엔드 연결): 이 자리에서 인증 서비스를 호출합니다.
+         - 가입: signUp({email, password}) 후 프로필 테이블에 name/studentId/handle 저장, status='pending'
+         - 로그인: signInWithPassword({email, password}) 후 status==='approved' 인지 확인
+         지금은 서버가 없으므로 안내 화면만 보여줍니다. */
+      if(k==='join'){
+        document.querySelector('.tabs').hidden=true;
+        panels.join.hidden=true; panels.login.hidden=true;
+        pending.hidden=false;
+        pending.scrollIntoView({block:'nearest'});
+      } else {
+        setErr(this.querySelector('[name=password]'),'아직 서버가 연결되지 않아 로그인할 수 없습니다.');
+      }
+    });
+  });
+  document.getElementById('forgot').addEventListener('click',function(e){
+    e.preventDefault();
+    alert('비밀번호 재설정은 서버 연결 후 이메일로 자동 발송됩니다.');
+  });
+})();
+</script>
+</body>
+</html>
