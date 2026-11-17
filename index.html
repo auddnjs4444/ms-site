@@ -404,6 +404,37 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   #menu{transform:none}
   .intro-line span{opacity:1;transform:none}
 }
+/* ============ 06 자료실 ============ */
+.bd-tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:clamp(2rem,4vw,2.8rem)}
+.bd-tab{font-family:inherit;font-size:.88rem;font-weight:600;letter-spacing:-.01em;
+  background:transparent;color:var(--ink);border:1px solid var(--ink);
+  padding:.55rem 1.05rem;cursor:pointer;transition:background .2s,color .2s}
+.bd-tab:hover{background:var(--surface)}
+.bd-tab[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.bd-wrap{margin-top:1.6rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
+/* 칸 사이에만 선이 생기도록, 각 칸의 왼쪽·위쪽 선을 바깥으로 1px 밀어 숨깁니다 */
+.bd-grid{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin:-1px 0 0 -1px}
+.bd-card{border-left:1px solid var(--line);border-top:1px solid var(--line);
+  padding:clamp(1rem,2vw,1.4rem);display:flex;flex-direction:column}
+.bd-thumb{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--surface);text-decoration:none}
+.bd-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.bd-card:hover .bd-thumb img{transform:scale(1.03)}
+.bd-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  background:#E4E3DD;color:var(--ink-soft);font-size:.82rem;font-weight:600;letter-spacing:.02em}
+.bd-card h3{margin-top:1rem;font-size:1.02rem;font-weight:650;letter-spacing:-.02em;line-height:1.4}
+.bd-card h3 a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;
+  text-decoration-color:rgba(18,18,16,.45)}
+.bd-card h3 a:hover{color:var(--accent-deep);text-decoration-color:var(--accent)}
+.bd-desc{margin-top:.4rem;font-size:.87rem;color:var(--ink-soft);line-height:1.6;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd-tags{margin-top:.55rem;font-size:.74rem;font-weight:600;letter-spacing:.01em;color:var(--ink-soft)}
+.bd-more{margin-top:auto;padding-top:.9rem;font-size:.82rem;font-weight:650;color:var(--accent-deep);
+  text-underline-offset:4px;align-self:flex-start}
+.bd-state{margin-top:1.6rem;font-size:.92rem;color:var(--ink-soft)}
+.bd-state:empty{display:none}
+@media (max-width:1023px){ .bd-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:599px){ .bd-grid{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){ .bd-thumb img{transition:none} }
 </style>
 </head>
 <body>
@@ -448,8 +479,9 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
         <li><a href="#work" style="--d:.1s"><span class="n" lang="en">03</span>하는 일</a></li>
         <li><a href="#about" style="--d:.16s"><span class="n" lang="en">04</span>우리는 누구</a></li>
         <li><a href="#activity" style="--d:.22s"><span class="n" lang="en">05</span>활동 기록</a></li>
-        <li><a href="#contact" style="--d:.28s"><span class="n" lang="en">06</span>함께하기</a></li>
-        <li class="menu-members"><a href="members.html" style="--d:.34s"><span class="n" aria-hidden="true">↗</span>부원 전용</a></li>
+        <li><a href="#board" style="--d:.28s"><span class="n" lang="en">06</span>자료실</a></li>
+        <li><a href="#contact" style="--d:.34s"><span class="n" lang="en">07</span>함께하기</a></li>
+        <li class="menu-members"><a href="members.html" style="--d:.4s"><span class="n" aria-hidden="true">↗</span>부원 전용</a></li>
       </ul>
     </nav>
     <div class="menu-meta micro">
@@ -689,10 +721,10 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
         </div>
       </div>
       <div class="arc-row">
-        <span class="arc-year">제작 중</span>
+        <span class="arc-year">개정 중</span>
         <div>
-          <h3>진료 소통 보드 시제품 제작 중</h3>
-          <p>진료실에서 짚어 가며 쓰는 소통 보드를 만들고 있습니다.</p>
+          <h3>진료 소통 보드 1차분 80개 배포 · 2차 개정 중</h3>
+          <p>1차분 80개를 배포했고, 2차 개정판을 만들고 있습니다.</p>
         </div>
       </div>
       <div class="arc-row">
@@ -717,11 +749,37 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   </div>
 </section>
 
-<!-- ============ 06 CONTACT / 함께하기 (FAQ 포함) ============ -->
+<!-- ============ 06 BOARD / 자료실 ============
+     글 목록은 data/posts.json 에서 불러옵니다. 이 HTML 은 고칠 필요가 없습니다. -->
+<section id="board" aria-labelledby="board-t" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <span class="micro en" lang="en">06 / Archive</span>
+      <span class="micro">자료실</span>
+    </div>
+    <h2 id="board-t" class="display rv">우리가 만든 <em>것</em>들.</h2>
+    <p class="lead rv" style="--d:.1s">
+      메디사인이 만든 도구와 프로젝트를 모았습니다.<br>
+      출처를 밝히면 인쇄해서 자유롭게 쓰실 수 있습니다.
+    </p>
+
+    <div class="bd-tabs rv" style="--d:.15s" role="group" aria-label="분류로 거르기" id="bdTabs">
+      <button type="button" class="bd-tab" data-cat="" aria-pressed="true">전체</button>
+    </div>
+
+    <div class="bd-wrap">
+      <ul class="bd-grid" id="bdGrid" aria-live="polite"></ul>
+    </div>
+    <p class="bd-state" id="bdState">자료를 불러오는 중…</p>
+    <noscript><p class="bd-state">자료실을 보려면 자바스크립트를 켜 주세요.</p></noscript>
+  </div>
+</section>
+
+<!-- ============ 07 CONTACT / 함께하기 (FAQ 포함) ============ -->
 <section id="contact" class="dark" aria-labelledby="contact-t">
   <div class="container">
     <div class="sec-head">
-      <span class="micro en" lang="en">06 / Contact</span>
+      <span class="micro en" lang="en">07 / Contact</span>
       <span class="micro">함께하기</span>
     </div>
     <h2 id="contact-t" class="display rv">함께<br><em>신호</em>를 읽어요.</h2>
@@ -973,6 +1031,91 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     }, {rootMargin:'-38% 0px -38% 0px'});
     document.querySelectorAll('.work-row, .c-card').forEach(function(el){ tio.observe(el); });
   }
+})();
+</script>
+
+<script>
+/* ===== 06 자료실 — data/posts.json 을 읽어 카드로 그립니다 ===== */
+(function(){
+  var grid = document.getElementById('bdGrid');
+  var tabs = document.getElementById('bdTabs');
+  var stateEl = document.getElementById('bdState');
+  if(!grid) return;
+  var all = [];
+
+  /* 사진 파일이 아직 없으면 회색 '사진 준비 중' 칸으로 바꿉니다 */
+  function photo(img, title){
+    var box = document.createElement('a');
+    box.className = 'bd-thumb';
+    box.tabIndex = -1;                      /* 제목 링크와 중복되지 않게 키보드 순서에서는 뺍니다 */
+    box.setAttribute('aria-hidden', 'true');
+    function placeholder(){
+      box.textContent = '';
+      var ph = document.createElement('span'); ph.className = 'bd-ph';
+      ph.textContent = '사진 준비 중';
+      box.appendChild(ph);
+    }
+    if(!img || !img.src){ placeholder(); return box; }
+    var el = document.createElement('img');
+    el.src = img.src; el.alt = img.alt || title; el.loading = 'lazy';
+    el.onerror = placeholder;
+    box.appendChild(el);
+    return box;
+  }
+
+  function card(p){
+    var url = 'board.html?id=' + encodeURIComponent(p.id);
+    var li = document.createElement('li'); li.className = 'bd-card';
+
+    var th = photo(p.images && p.images[0], p.title); th.href = url;
+    var h = document.createElement('h3');
+    var a = document.createElement('a'); a.href = url; a.textContent = p.title;
+    h.appendChild(a);
+    li.appendChild(th); li.appendChild(h);
+
+    if(p.summary){
+      var d = document.createElement('p'); d.className = 'bd-desc'; d.textContent = p.summary; d.title = p.summary;
+      li.appendChild(d);
+    }
+    if(p.tags && p.tags.length){
+      var t = document.createElement('p'); t.className = 'bd-tags'; t.textContent = p.tags.join(' · ');
+      li.appendChild(t);
+    }
+    var more = document.createElement('a');
+    more.className = 'bd-more'; more.href = url; more.textContent = '자세히 보기 →';
+    more.setAttribute('aria-label', p.title + ' 자세히 보기');
+    li.appendChild(more);
+    return li;
+  }
+
+  function show(cat){
+    grid.textContent = '';
+    var list = all.filter(function(p){ return !cat || p.category === cat; });
+    list.forEach(function(p){ grid.appendChild(card(p)); });
+    stateEl.textContent = list.length ? '' : '아직 올라온 자료가 없습니다.';
+    tabs.querySelectorAll('.bd-tab').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.cat === cat));
+    });
+  }
+
+  fetch('data/posts.json', {cache:'no-cache'})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data){
+      all = data.posts || [];
+      (data.categories || []).forEach(function(c){
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'bd-tab'; b.dataset.cat = c;
+        b.setAttribute('aria-pressed', 'false'); b.textContent = c;
+        tabs.appendChild(b);
+      });
+      tabs.addEventListener('click', function(e){
+        var b = e.target.closest('.bd-tab'); if(b) show(b.dataset.cat);
+      });
+      show('');
+    })
+    .catch(function(){
+      stateEl.textContent = '자료를 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요.';
+    });
 })();
 </script>
 </body>

@@ -1,0 +1,84 @@
+{
+  "categories": ["병원 의사소통도구", "문화재단"],
+  "posts": [
+    {
+      "id": "lfile",
+      "category": "병원 의사소통도구",
+      "title": "휴대용 통증척도 L자 파일",
+      "summary": "접수 때 꺼내 아픈 곳과 정도를 짚어 전하는 카드",
+      "version": "v1.0",
+      "date": "2026.10",
+      "tags": ["v1.0", "2026.10", "혁신지원사업"],
+      "images": [
+        { "src": "assets/board/lfile-front.jpg", "label": "앞면",      "alt": "휴대용 통증척도 L자 파일 앞면 — 몸 그림과 통증 정도 칸" },
+        { "src": "assets/board/lfile-back.jpg",  "label": "뒷면",      "alt": "휴대용 통증척도 L자 파일 뒷면 — 약과 알레르기 질문 칸" },
+        { "src": "assets/board/lfile-use.jpg",   "label": "사용 장면", "alt": "접수창구에서 L자 파일의 아픈 곳을 손가락으로 짚는 모습" }
+      ],
+      "pdf": "files/lfile.pdf",
+      "usage": {
+        "deaf":  ["아픈 곳 짚기", "정도 짚기", "약·알레르기 답하기"],
+        "staff": ["파일을 환자 쪽으로 펴서 보여주기", "짚은 부위와 정도를 함께 확인하기", "약·알레르기 칸의 답을 차트에 옮겨 적기"]
+      },
+      "process": [],
+      "ai": "그림: ChatGPT로 생성 후 팀이 수정",
+      "support": "전문대학혁신지원사업 「수어로 잇는 동행」",
+      "feedback": "#"
+    },
+    {
+      "id": "keyring",
+      "category": "병원 의사소통도구",
+      "title": "휴대용 통증척도 키링",
+      "summary": "가방에 달고 다니다 갑자기 아플 때 꺼내는 척도",
+      "version": "v1.0",
+      "date": "2026.10",
+      "tags": ["v1.0", "2026.10", "혁신지원사업"],
+      "images": [
+        { "src": "assets/board/keyring-front.jpg", "label": "앞면",      "alt": "휴대용 통증척도 키링 앞면" },
+        { "src": "assets/board/keyring-back.jpg",  "label": "뒷면",      "alt": "휴대용 통증척도 키링 뒷면" },
+        { "src": "assets/board/keyring-use.jpg",   "label": "사용 장면", "alt": "가방에 단 키링을 꺼내 통증 정도를 짚는 모습" }
+      ],
+      "pdf": "files/keyring.pdf",
+      "usage": {
+        "deaf":  ["아픈 곳 짚기", "정도 짚기", "약·알레르기 답하기"],
+        "staff": ["키링을 받아 환자와 함께 보기", "짚은 부위와 정도를 확인하기", "약·알레르기 답을 차트에 옮겨 적기"]
+      },
+      "process": [],
+      "ai": "그림: ChatGPT로 생성 후 팀이 수정",
+      "support": "전문대학혁신지원사업 「수어로 잇는 동행」",
+      "feedback": "#"
+    },
+    {
+      "id": "note",
+      "category": "병원 의사소통도구",
+      "title": "의사소통 수첩",
+      "summary": "",
+      "version": "",
+      "date": "",
+      "tags": ["자체 제작"],
+      "images": [
+        { "src": "assets/board/note-cover.jpg", "label": "표지", "alt": "의사소통 수첩 표지" }
+      ],
+      "pdf": "files/note.pdf",
+      "usage": { "deaf": [], "staff": [] },
+      "process": [],
+      "ai": "",
+      "support": "동아리 자체 제작",
+      "feedback": "#"
+    },
+    {
+      "id": "sign-map",
+      "category": "문화재단",
+      "title": "손으로 부르는 광주 — 동구 지명 수어지도",
+      "summary": "동구의 지명과 랜드마크를 수어로 기록한 지도",
+      "tags": ["2026.8–10", "광주문화재단"],
+      "images": [
+        { "src": "assets/board/sign-map-cover.jpg", "label": "대표 사진", "alt": "동구 지명 수어지도 화면" }
+      ],
+      "org": "광주문화재단 일경험 프로젝트 37기 ‘청년 ESG 문화실험실’",
+      "period": "2026.8.31 ~ 10.23",
+      "results": ["동구 지명 16곳·랜드마크 13곳 기록", "농인 5명 스토리 인터뷰", "쉼터 농인 10명 시연"],
+      "link": "https://auddnjs4444.github.io/munhwa.map/",
+      "support": "광주문화재단 일경험 프로젝트 37기 ‘청년 ESG 문화실험실’ (2026.8.31~10.23)"
+    }
+  ]
+}
