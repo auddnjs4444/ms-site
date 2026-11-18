@@ -1,5 +1,8 @@
 {
-  "categories": ["병원 의사소통도구", "문화재단"],
+  "categories": [
+    "병원 의사소통도구",
+    "문화재단"
+  ],
   "posts": [
     {
       "id": "lfile",
@@ -8,16 +11,45 @@
       "summary": "접수 때 꺼내 아픈 곳과 정도를 짚어 전하는 카드",
       "version": "v1.0",
       "date": "2026.10",
-      "tags": ["v1.0", "2026.10", "혁신지원사업"],
+      "tags": [
+        "v1.0",
+        "2026.10",
+        "혁신지원사업"
+      ],
       "images": [
-        { "src": "assets/board/lfile-front.jpg", "label": "앞면",      "alt": "휴대용 통증척도 L자 파일 앞면 — 몸 그림과 통증 정도 칸" },
-        { "src": "assets/board/lfile-back.jpg",  "label": "뒷면",      "alt": "휴대용 통증척도 L자 파일 뒷면 — 약과 알레르기 질문 칸" },
-        { "src": "assets/board/lfile-use.jpg",   "label": "사용 장면", "alt": "접수창구에서 L자 파일의 아픈 곳을 손가락으로 짚는 모습" }
+        {
+          "src": "assets/board/lfile-front.jpg",
+          "label": "앞면",
+          "alt": "L자 파일 앞면. '어디가 아프세요?' 아래 머리·얼굴·목·어깨 등 18개 부위 그림, '얼마나 아프세요?' 아래 표정 3개와 0~10 통증 척도"
+        },
+        {
+          "src": "assets/board/lfile-back.jpg",
+          "label": "뒷면",
+          "alt": "L자 파일 뒷면. '기저질환이 있어요' 아래 고혈압·당뇨병·심장질환 등 13개 질환 그림, '약 알레르기가 있어요' 아래 있어요·없어요·몰라요 수어 그림"
+        },
+        {
+          "src": "assets/board/lfile-both.jpg",
+          "label": "두 면 함께",
+          "alt": "L자 파일 앞면과 뒷면을 겹쳐 놓은 모습"
+        },
+        {
+          "src": "assets/board/tools-set.jpg",
+          "label": "세 가지 함께",
+          "alt": "L자 파일, 의사소통 수첩, 통증척도 키링 세 가지를 함께 놓은 모습"
+        }
       ],
       "pdf": "files/lfile.pdf",
       "usage": {
-        "deaf":  ["아픈 곳 짚기", "정도 짚기", "약·알레르기 답하기"],
-        "staff": ["파일을 환자 쪽으로 펴서 보여주기", "짚은 부위와 정도를 함께 확인하기", "약·알레르기 칸의 답을 차트에 옮겨 적기"]
+        "deaf": [
+          "아픈 곳 짚기",
+          "정도 짚기",
+          "약·알레르기 답하기"
+        ],
+        "staff": [
+          "파일을 환자 쪽으로 펴서 보여주기",
+          "짚은 부위와 정도를 함께 확인하기",
+          "약·알레르기 칸의 답을 차트에 옮겨 적기"
+        ]
       },
       "process": [],
       "ai": "그림: ChatGPT로 생성 후 팀이 수정",
@@ -31,16 +63,45 @@
       "summary": "가방에 달고 다니다 갑자기 아플 때 꺼내는 척도",
       "version": "v1.0",
       "date": "2026.10",
-      "tags": ["v1.0", "2026.10", "혁신지원사업"],
+      "tags": [
+        "v1.0",
+        "2026.10",
+        "혁신지원사업"
+      ],
       "images": [
-        { "src": "assets/board/keyring-front.jpg", "label": "앞면",      "alt": "휴대용 통증척도 키링 앞면" },
-        { "src": "assets/board/keyring-back.jpg",  "label": "뒷면",      "alt": "휴대용 통증척도 키링 뒷면" },
-        { "src": "assets/board/keyring-use.jpg",   "label": "사용 장면", "alt": "가방에 단 키링을 꺼내 통증 정도를 짚는 모습" }
+        {
+          "src": "assets/board/keyring-front.jpg",
+          "label": "앞면",
+          "alt": "키링 앞면. '얼마나 아프세요?' 아래 표정 3개와 0~10 통증 척도, 왼쪽에 메디사인 로고와 인스타그램 QR 코드"
+        },
+        {
+          "src": "assets/board/keyring-back.jpg",
+          "label": "뒷면",
+          "alt": "키링 뒷면. '어디가 아파요?' 아래 피부·근육·장기·뼈 그림, '약 알레르기 있나요?' 아래 있어요·없어요·몰라요 수어 그림"
+        },
+        {
+          "src": "assets/board/keyring-both.jpg",
+          "label": "두 면 함께",
+          "alt": "키링 앞면과 뒷면을 함께 놓은 모습"
+        },
+        {
+          "src": "assets/board/tools-set.jpg",
+          "label": "세 가지 함께",
+          "alt": "L자 파일, 의사소통 수첩, 통증척도 키링 세 가지를 함께 놓은 모습"
+        }
       ],
       "pdf": "files/keyring.pdf",
       "usage": {
-        "deaf":  ["아픈 곳 짚기", "정도 짚기", "약·알레르기 답하기"],
-        "staff": ["키링을 받아 환자와 함께 보기", "짚은 부위와 정도를 확인하기", "약·알레르기 답을 차트에 옮겨 적기"]
+        "deaf": [
+          "아픈 곳 짚기",
+          "정도 짚기",
+          "약·알레르기 답하기"
+        ],
+        "staff": [
+          "키링을 받아 환자와 함께 보기",
+          "짚은 부위와 정도를 확인하기",
+          "약·알레르기 답을 차트에 옮겨 적기"
+        ]
       },
       "process": [],
       "ai": "그림: ChatGPT로 생성 후 팀이 수정",
@@ -54,12 +115,31 @@
       "summary": "",
       "version": "",
       "date": "",
-      "tags": ["자체 제작"],
+      "tags": [
+        "자체 제작"
+      ],
       "images": [
-        { "src": "assets/board/note-cover.jpg", "label": "표지", "alt": "의사소통 수첩 표지" }
+        {
+          "src": "assets/board/note-cover.jpg",
+          "label": "표지",
+          "alt": "의사소통 수첩 표지. 메디사인 집 모양 로고 아래 '얼마나 아프세요?' 표정 3개와 0~10 통증 척도"
+        },
+        {
+          "src": "assets/board/note-inside.jpg",
+          "label": "속지",
+          "alt": "의사소통 수첩 속지. '약 알레르기 있어요?' 수어 그림 3개와 '어디가 아프세요?' 18개 부위 그림"
+        },
+        {
+          "src": "assets/board/tools-set.jpg",
+          "label": "세 가지 함께",
+          "alt": "L자 파일, 의사소통 수첩, 통증척도 키링 세 가지를 함께 놓은 모습"
+        }
       ],
       "pdf": "files/note.pdf",
-      "usage": { "deaf": [], "staff": [] },
+      "usage": {
+        "deaf": [],
+        "staff": []
+      },
       "process": [],
       "ai": "",
       "support": "동아리 자체 제작",
@@ -70,13 +150,25 @@
       "category": "문화재단",
       "title": "손으로 부르는 광주 — 동구 지명 수어지도",
       "summary": "동구의 지명과 랜드마크를 수어로 기록한 지도",
-      "tags": ["2026.8–10", "광주문화재단"],
+      "tags": [
+        "2026.8–10",
+        "광주문화재단"
+      ],
       "images": [
-        { "src": "assets/board/sign-map-cover.jpg", "label": "대표 사진", "alt": "동구 지명 수어지도 화면" }
+        {
+          "src": "assets/board/sign-map-cover.jpg",
+          "label": "사이트 첫 화면",
+          "position": "left center",
+          "alt": "'손으로 부르는 광주' 수어지도 웹사이트 첫 화면. 광주 야경 위에 제목과 '광주 탐험하기' 버튼"
+        }
       ],
       "org": "광주문화재단 일경험 프로젝트 37기 ‘청년 ESG 문화실험실’",
       "period": "2026.8.31 ~ 10.23",
-      "results": ["동구 지명 16곳·랜드마크 13곳 기록", "농인 5명 스토리 인터뷰", "쉼터 농인 10명 시연"],
+      "results": [
+        "동구 지명 16곳·랜드마크 13곳 기록",
+        "농인 5명 스토리 인터뷰",
+        "쉼터 농인 10명 시연"
+      ],
       "link": "https://auddnjs4444.github.io/munhwa.map/",
       "support": "광주문화재단 일경험 프로젝트 37기 ‘청년 ESG 문화실험실’ (2026.8.31~10.23)"
     }

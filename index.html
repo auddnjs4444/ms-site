@@ -422,7 +422,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 .bd-grid{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin:-1px 0 0 -1px}
 .bd-card{border-left:1px solid var(--line);border-top:1px solid var(--line);
   padding:clamp(1rem,2vw,1.4rem);display:flex;flex-direction:column}
-.bd-thumb{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--surface);text-decoration:none}
+.bd-thumb{display:block;aspect-ratio:1/1;overflow:hidden;background:var(--surface);text-decoration:none}
 .bd-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
 .bd-card:hover .bd-thumb img{transform:scale(1.03)}
 .bd-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
@@ -1074,6 +1074,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     if(!img || !img.src){ placeholder(); return box; }
     var el = document.createElement('img');
     el.src = img.src; el.alt = img.alt || title; el.loading = 'lazy';
+    if(img.position) el.style.objectPosition = img.position;   /* 가로로 긴 사진은 보일 부분을 지정 */
     el.onerror = placeholder;
     box.appendChild(el);
     return box;
