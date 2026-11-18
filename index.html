@@ -245,6 +245,12 @@ html:not(.js) .flow-line{transform:scaleX(1)}
 .arc-year{font-size:.8rem;font-weight:600;letter-spacing:.1em;color:var(--accent-deep)}
 .arc-row h3{font-size:clamp(1.1rem,2vw,1.45rem);letter-spacing:-.015em}
 .arc-row p{margin-top:.4rem;color:var(--muted);font-size:.93rem}
+.arc-photos{margin-top:1.1rem;display:grid;grid-template-columns:1fr 1fr;gap:.7rem;max-width:720px}
+.arc-photos a{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.arc-photos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.arc-photos a:hover img{transform:scale(1.03)}
+@media (max-width:479px){ .arc-photos{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){ .arc-photos img{transition:none} }
 .arc-row.ghost{border-top-style:dashed;color:var(--muted)}
 .arc-row.ghost .arc-year{color:var(--muted)}
 .arc-row.ghost h3{color:var(--muted);font-weight:600}
@@ -500,7 +506,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   <div class="container" style="display:flex;flex-direction:column;flex:1;min-height:100%">
     <div class="sec-head">
       <span class="micro en" lang="en">01 / Signal</span>
-      <span class="micro">기독간호대학교 봉사 동아리</span>
+      <span class="micro">기독간호대학교 의료소통 동아리</span>
     </div>
     <h1 class="rv" lang="en">MEDI<span class="h-plus" aria-hidden="true">+</span><em class="en">SIGN</em></h1>
     <p class="lead rv" style="--d:.15s">
@@ -714,10 +720,20 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
         </div>
       </div>
       <div class="arc-row">
-        <span class="arc-year">진행 중</span>
+        <span class="arc-year">수료</span>
         <div>
-          <h3>의료 수어 스터디 격주 진행 중</h3>
-          <p>진료 상황에서 쓰는 기초 수어를 정기 모임으로 함께 익히고 있습니다.</p>
+          <h3>수어 기초 교육 수료 완료</h3>
+          <p>2026.9.7 ~ 10.12</p>
+          <div class="arc-photos">
+            <a href="assets/gallery/sign-course-1.jpg" target="_blank" rel="noopener">
+              <img src="assets/gallery/sign-course-1.jpg" width="1200" height="900" loading="lazy"
+                   alt="광주광역시 서구 농아인쉼터 앞에서 부원들과 강사 선생님이 수어 기초 교육 수료증을 펼쳐 들고 찍은 단체 사진">
+            </a>
+            <a href="assets/gallery/sign-course-2.jpg" target="_blank" rel="noopener">
+              <img src="assets/gallery/sign-course-2.jpg" width="1200" height="900" loading="lazy"
+                   alt="교육실에서 부원들이 수료증을 펼쳐 들고, 강사 선생님들이 수어로 인사하는 모습. 뒤 화면에 '10차시 일상 생활 동사'가 띄워져 있다">
+            </a>
+          </div>
         </div>
       </div>
       <div class="arc-row">
