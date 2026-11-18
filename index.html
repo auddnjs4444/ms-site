@@ -84,6 +84,20 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   padding:1.1rem 4vw;
 }
+/* 상단 띠 배너가 있으면 그 높이만큼 헤더를 내립니다 (스크롤하면 0으로) */
+header{top:var(--bn-off,0px)}
+.top-banner{position:relative;height:44px;display:flex;align-items:center;justify-content:center;
+  background:var(--accent);color:#fff;padding:0 48px 0 16px}
+.tb-link{color:#fff;text-decoration:none;font-weight:600;letter-spacing:-.01em;line-height:44px;
+  font-size:clamp(.7rem,3.4vw,.9rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.tb-link:hover{text-decoration:underline;text-underline-offset:3px}
+.tb-close{position:absolute;right:0;top:0;width:44px;height:44px;background:none;border:0;
+  color:#fff;font-size:1rem;line-height:1;cursor:pointer;font-family:inherit}
+.tb-close:hover{background:rgba(0,0,0,.12)}
+.top-banner :focus-visible{outline:2px solid #fff;outline-offset:-4px}
+@media (min-width:600px){ .top-banner{padding:0 48px} }
+/* 배너만큼 첫 화면 높이를 줄여 히어로 아래쪽 버튼이 화면 밖으로 밀리지 않게 */
+body.has-banner #hero{min-height:calc(100svh - 44px)}
 .wordmark{font-weight:700;letter-spacing:-.02em;font-size:1.02rem;text-decoration:none}
 .wordmark i,#menuBtn .br{font-family:inherit;font-style:normal;color:#DA70A7}/* difference 반전 시 학교 초록으로 보임 */
 .head-right{display:flex;align-items:center;gap:1.6rem}
@@ -166,6 +180,7 @@ section{padding-block:var(--pad-sec)}
 .cta:hover .br:last-child{transform:translateX(4px)}
 .cta:active{opacity:.65}
 .cta.ghost{color:var(--muted)}
+.cta.cta-key{color:var(--accent-deep);font-weight:700}   /* 히어로에서 가장 먼저 눈에 띄는 버튼 */
 .dark .cta .br{color:var(--accent-dark)}
 
 /* ============ 02 문제 ============ */
@@ -468,6 +483,34 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 <a class="skip" href="#main">본문으로 바로가기</a>
 <div id="progress" aria-hidden="true"></div>
 
+<!-- 상단 띠 배너 — ✕로 닫으면 같은 방문(탭) 동안 다시 뜨지 않습니다 -->
+<div class="top-banner" id="topBanner" role="region" aria-label="알림">
+  <a class="tb-link" href="board.html?id=lfile">「수어로 잇는 동행」 휴대용 통증척도 자료 보기 →</a>
+  <button class="tb-close" id="tbClose" type="button" aria-label="배너 닫기">✕</button>
+</div>
+<script>
+/* 그리기 전에 바로 확인해서, 이미 닫은 사람에겐 배너가 깜빡이지도 않게 합니다 */
+(function(){
+  var b = document.getElementById('topBanner'), root = document.documentElement, closed = false;
+  try { closed = sessionStorage.getItem('ms-banner-closed') === '1'; } catch(e){}
+  if(closed){ b.remove(); return; }
+  document.body.classList.add('has-banner');
+  /* 배너가 화면에 보이는 만큼 고정 헤더를 아래로 내립니다 */
+  function sync(){ root.style.setProperty('--bn-off', Math.max(0, b.offsetHeight - window.scrollY) + 'px'); }
+  sync();
+  window.addEventListener('scroll', sync, {passive:true});
+  window.addEventListener('resize', sync, {passive:true});
+  document.getElementById('tbClose').addEventListener('click', function(){
+    try { sessionStorage.setItem('ms-banner-closed', '1'); } catch(e){}
+    window.removeEventListener('scroll', sync); window.removeEventListener('resize', sync);
+    b.remove();
+    document.body.classList.remove('has-banner');
+    root.style.setProperty('--bn-off', '0px');
+    var w = document.querySelector('.wordmark'); if(w) w.focus();  /* 닫은 뒤 초점이 사라지지 않게 */
+  });
+})();
+</script>
+
 <header>
   <a class="wordmark" href="#hero"><img src="assets/medisign-logo-white.png" alt="MEDISIGN" width="292" height="359" style="display:block;height:44px;width:auto"></a>
   <div class="head-right">
@@ -520,6 +563,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
       <strong>청각장애인의 의료 접근성</strong>을 높이는 것입니다.
     </p>
     <div class="cta-row rv" style="--d:.3s">
+      <a class="cta cta-key" href="#board"><span class="br">[</span> 통증척도 자료실 → <span class="br">]</span></a>
       <a class="cta" href="#contact"><span class="br">[</span> 함께하기 <span class="br">]</span></a>
       <a class="cta ghost" href="#problem"><span class="br">[</span> 왜 필요한가요 ↓ <span class="br">]</span></a>
     </div>
