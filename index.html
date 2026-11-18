@@ -417,11 +417,14 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   padding:.55rem 1.05rem;cursor:pointer;transition:background .2s,color .2s}
 .bd-tab:hover{background:var(--surface)}
 .bd-tab[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.bd-tabdesc{margin-top:.8rem;font-size:.86rem;color:var(--ink-soft)}
+.bd-tabdesc:empty{display:none}
+.bd-tag{white-space:nowrap}   /* 메타가 길면 항목 사이에서만 줄바꿈 */
 .bd-wrap{margin-top:1.6rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
 /* 칸 사이에만 선이 생기도록, 각 칸의 왼쪽·위쪽 선을 바깥으로 1px 밀어 숨깁니다 */
-.bd-grid{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin:-1px 0 0 -1px}
+.bd-grid{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:-1px 0 0 -1px}
 .bd-card{border-left:1px solid var(--line);border-top:1px solid var(--line);
-  padding:clamp(1rem,2vw,1.4rem);display:flex;flex-direction:column}
+  padding:clamp(1rem,2vw,1.4rem);display:flex;flex-direction:column;min-width:0}
 .bd-thumb{display:block;aspect-ratio:1/1;overflow:hidden;background:var(--surface);text-decoration:none}
 .bd-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
 .bd-card:hover .bd-thumb img{transform:scale(1.03)}
@@ -431,15 +434,14 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
 .bd-card h3 a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;
   text-decoration-color:rgba(18,18,16,.45)}
 .bd-card h3 a:hover{color:var(--accent-deep);text-decoration-color:var(--accent)}
-.bd-desc{margin-top:.4rem;font-size:.87rem;color:var(--ink-soft);line-height:1.6;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd-desc{margin-top:.4rem;font-size:.87rem;color:var(--ink-soft);line-height:1.6}
 .bd-tags{margin-top:.55rem;font-size:.74rem;font-weight:600;letter-spacing:.01em;color:var(--ink-soft)}
 .bd-more{margin-top:auto;padding-top:.9rem;font-size:.82rem;font-weight:650;color:var(--accent-deep);
   text-underline-offset:4px;align-self:flex-start}
 .bd-state{margin-top:1.6rem;font-size:.92rem;color:var(--ink-soft)}
 .bd-state:empty{display:none}
-@media (max-width:1023px){ .bd-grid{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:599px){ .bd-grid{grid-template-columns:1fr} }
+@media (max-width:1023px){ .bd-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:599px){ .bd-grid{grid-template-columns:minmax(0,1fr)} }
 @media (prefers-reduced-motion:reduce){ .bd-thumb img{transition:none} }
 </style>
 </head>
@@ -737,17 +739,17 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
         </div>
       </div>
       <div class="arc-row">
-        <span class="arc-year">개정 중</span>
+        <span class="arc-year">공개</span>
         <div>
-          <h3>진료 소통 보드 1차분 80개 배포 · 2차 개정 중</h3>
-          <p>1차분 80개를 배포했고, 2차 개정판을 만들고 있습니다.</p>
+          <h3>병원 의사소통도구 v1.0 제작 · 자료실 공개</h3>
+          <p>통증척도 L자 파일·키링과 의사소통 수첩을 만들어 자료실에 공개했습니다.</p>
         </div>
       </div>
       <div class="arc-row">
-        <span class="arc-year">준비 중</span>
+        <span class="arc-year">진행 중</span>
         <div>
-          <h3>첫 기관 연계 준비 중</h3>
-          <p>복지관·보건소와 함께할 건강교육을 협의하고 있습니다.</p>
+          <h3>동구 농아인쉼터와 첫 건강교육</h3>
+          <p>11월 27일, 쉼터 농인분들과 손씻기 교육으로 첫 건강교육을 시작합니다.</p>
         </div>
       </div>
       <!-- 활동이 늘어나면 위 형식대로 한 줄씩 추가하세요 -->
@@ -775,13 +777,14 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     </div>
     <h2 id="board-t" class="display rv">우리가 만든 <em>것</em>들.</h2>
     <p class="lead rv" style="--d:.1s">
-      메디사인이 만든 도구와 프로젝트를 모았습니다.<br>
-      출처를 밝히면 인쇄해서 자유롭게 쓰실 수 있습니다.
+      메디사인이 직접 만들고 기록한 결과물을 모았습니다.<br>
+      병원에서 쓰는 소통도구부터 지역 수어 아카이빙까지, 농인과 의료 사이의 거리를 줄이기 위한 작업들입니다.
     </p>
 
     <div class="bd-tabs rv" style="--d:.15s" role="group" aria-label="분류로 거르기" id="bdTabs">
       <button type="button" class="bd-tab" data-cat="" aria-pressed="true">전체</button>
     </div>
+    <p class="bd-tabdesc" id="bdTabDesc" aria-live="polite"></p>
 
     <div class="bd-wrap">
       <ul class="bd-grid" id="bdGrid" aria-live="polite"></ul>
@@ -1056,6 +1059,8 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
   var grid = document.getElementById('bdGrid');
   var tabs = document.getElementById('bdTabs');
   var stateEl = document.getElementById('bdState');
+  var descEl = document.getElementById('bdTabDesc');
+  var descs = {};
   if(!grid) return;
   var all = [];
 
@@ -1095,7 +1100,13 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
       li.appendChild(d);
     }
     if(p.tags && p.tags.length){
-      var t = document.createElement('p'); t.className = 'bd-tags'; t.textContent = p.tags.join(' · ');
+      var t = document.createElement('p'); t.className = 'bd-tags';
+      p.tags.forEach(function(tag, n){
+        if(n) t.appendChild(document.createTextNode(' '));
+        var s = document.createElement('span'); s.className = 'bd-tag';
+        s.textContent = tag + (n < p.tags.length - 1 ? ' ·' : '');
+        t.appendChild(s);
+      });
       li.appendChild(t);
     }
     var more = document.createElement('a');
@@ -1110,6 +1121,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     var list = all.filter(function(p){ return !cat || p.category === cat; });
     list.forEach(function(p){ grid.appendChild(card(p)); });
     stateEl.textContent = list.length ? '' : '아직 올라온 자료가 없습니다.';
+    descEl.textContent = descs[cat] || '';
     tabs.querySelectorAll('.bd-tab').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.cat === cat));
     });
@@ -1119,6 +1131,7 @@ footer{background:var(--ink);color:var(--on-dark);padding:0 0 2.2rem}
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
     .then(function(data){
       all = data.posts || [];
+      descs = data.categoryDesc || {};
       (data.categories || []).forEach(function(c){
         var b = document.createElement('button');
         b.type = 'button'; b.className = 'bd-tab'; b.dataset.cat = c;

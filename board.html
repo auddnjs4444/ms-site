@@ -92,6 +92,14 @@ ul.results{margin-top:.8rem;padding-left:1.15rem;font-size:.95rem;color:var(--in
 .fine b{color:var(--ink);font-weight:650}
 .fine a{color:var(--accent-deep);text-underline-offset:3px}
 
+/* 상세 소개와 사진 (홈 타임라인 사진과 같은 모양) */
+.intro{margin-top:.8rem;font-size:.95rem;color:var(--ink-soft);line-height:1.85;white-space:pre-line}
+.fig{margin-top:1.3rem;max-width:360px}
+.fig a{display:block;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.fig img{width:100%;height:auto;display:block;transition:transform .5s ease}
+.fig a:hover img{transform:scale(1.03)}
+.fig figcaption{margin-top:.5rem;font-size:.8rem;font-weight:600;color:var(--ink-soft)}
+@media (prefers-reduced-motion:reduce){ .fig img{transition:none} }
 .notfound{padding:3rem 0}
 footer{margin-top:3.5rem;border-top:1px solid var(--line);padding-top:1.4rem;
   font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
@@ -223,6 +231,24 @@ footer{margin-top:3.5rem;border-top:1px solid var(--line);padding-top:1.4rem;
     return a;
   }
 
+  /* ===== 상세 소개 + 사진 (posts.json 의 intro, figures) ===== */
+  function introBlock(p){
+    var hasText = p.intro && p.intro.length, figs = p.figures || [];
+    if(!hasText && !figs.length) return null;
+    var s = block('소개');
+    if(hasText) s.appendChild(el('p', 'intro', p.intro.join('\n')));
+    figs.forEach(function(f){
+      var fig = el('figure', 'fig');
+      var a = el('a'); a.href = f.src; a.target = '_blank'; a.rel = 'noopener';
+      var img = document.createElement('img');
+      img.src = f.src; img.alt = f.alt || ''; img.loading = 'lazy';
+      a.appendChild(img); fig.appendChild(a);
+      if(f.caption) fig.appendChild(el('figcaption', null, f.caption));
+      s.appendChild(fig);
+    });
+    return s;
+  }
+
   /* ===== 머리말 (분류·제목·한 줄 소개·버전) ===== */
   function head(p){
     var h = el('header');
@@ -242,6 +268,7 @@ footer{margin-top:3.5rem;border-top:1px solid var(--line);padding-top:1.4rem;
     grid.appendChild(gallery(p.images, p.title));
 
     var side = el('div');
+    var ib = introBlock(p); if(ib) side.appendChild(ib);
 
     var act = el('section', 'block');
     var row = el('div', 'actions');
@@ -315,6 +342,7 @@ footer{margin-top:3.5rem;border-top:1px solid var(--line);padding-top:1.4rem;
     grid.appendChild(gallery(p.images, p.title));
 
     var side = el('div');
+    var ib = introBlock(p); if(ib) side.appendChild(ib);
     var f = el('section', 'block');
     f.appendChild(el('h2', null, '지원'));
     var dl = el('dl', 'facts');
